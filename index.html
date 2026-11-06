@@ -1,0 +1,526 @@
+<title>トレラン体験記ナビ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a trail logbook — race tabs, a spec strip like a course profile, then a filterable list of links. Accent = the pink marking tape tied to trees on Japanese trails. */
+:root{
+  --bg:#f3f5f1; --surface:#ffffff; --ink:#1d2a24; --muted:#5d6b63; --line:#d9e0da;
+  --moss:#2f5d47; --tape:#d0336f; --tape-soft:#fbe4ee; --video:#7a4bb5; --video-soft:#efe7f9;
+  --f-display:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;
+  --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a17; --surface:#1c2420; --ink:#e4ebe6; --muted:#9aa8a0; --line:#2e3933;
+  --moss:#8cc4a6; --tape:#f0679b; --tape-soft:#3a2230; --video:#b996e8; --video-soft:#2c2338; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a17; --surface:#1c2420; --ink:#e4ebe6; --muted:#9aa8a0; --line:#2e3933;
+  --moss:#8cc4a6; --tape:#f0679b; --tape-soft:#3a2230; --video:#b996e8; --video-soft:#2c2338; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:920px;margin:0 auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--tape);outline-offset:2px;border-radius:4px}
+
+header{padding-block:32px 20px;display:grid;gap:6px}
+.toprow{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.langsw{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lsw{font:inherit;font-size:12.5px;border:0;background:var(--surface);color:var(--muted);padding:4px 12px;cursor:pointer}
+.lsw[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.lg{font-size:11px;font-weight:700;border-radius:4px;padding:0 6px;background:var(--line);color:var(--ink)}
+.lg.en,.lg.both{background:var(--moss);color:var(--bg)}
+.tip{font-size:13px;color:var(--muted);margin:0 0 8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance}
+h1 .tape{display:inline-block;background:var(--tape);color:#fff;padding:0 .3em;transform:rotate(-1.5deg);margin-left:.15em}
+.lead{color:var(--muted);margin:0;max-width:62ch}
+
+.notice{border:1px dashed var(--line);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--muted);margin-bottom:24px}
+.notice b{color:var(--ink)}
+
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab{font-family:var(--f-display);font-weight:700;font-size:15px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 16px;border-radius:999px;cursor:pointer}
+.tab small{font-family:var(--f-body);font-weight:500;color:var(--muted);margin-left:6px;font-size:12px}
+.tab[aria-selected="true"]{border-color:var(--moss);background:var(--moss);color:var(--bg)}
+.tab[aria-selected="true"] small{color:var(--bg);opacity:.8}
+
+.race{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:14px;margin-bottom:20px}
+.race h2{font-family:var(--f-display);font-weight:900;font-size:24px;margin:0;line-height:1.3}
+.race .sub{color:var(--muted);font-size:13px;margin:0}
+.race p{margin:0;max-width:65ch}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.spec{border-top:3px solid var(--moss);padding-top:8px;min-width:0}
+.spec .k{font-size:12px;color:var(--muted);letter-spacing:.04em}
+.spec .v{font-family:var(--f-mono);font-size:15px;font-variant-numeric:tabular-nums}
+.callout{background:var(--tape-soft);border-radius:8px;padding:10px 14px;font-size:13.5px}
+.links{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px}
+.links a{color:var(--moss);font-weight:700}
+
+.filters{display:grid;gap:10px;margin-bottom:12px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.row .lbl{font-size:12px;color:var(--muted);width:4.5em}
+.chip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:3px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#q{font:inherit;font-size:14px;width:100%;max-width:360px;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.count{font-size:13px;color:var(--muted);margin:4px 0 8px}
+
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:3.6em 1fr;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.kind{font-size:11.5px;font-weight:700;text-align:center;border-radius:4px;padding:2px 0;align-self:start;margin-top:3px}
+.kind.blog{background:var(--tape-soft);color:var(--tape)}
+.kind.video{background:var(--video-soft);color:var(--video)}
+.body{min-width:0}
+.body a{font-weight:700;text-decoration:none;overflow-wrap:anywhere}
+.body a:hover{text-decoration:underline}
+.meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12.5px;color:var(--muted);margin-top:2px}
+.meta .yr{font-family:var(--f-mono)}
+.tag{border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.empty{padding:24px 4px;color:var(--muted)}
+.yearhead{font-family:var(--f-mono);font-size:13px;color:var(--moss);padding:16px 4px 4px;border-bottom:2px solid var(--moss)}
+
+footer{margin-top:32px;font-size:12.5px;color:var(--muted);display:grid;gap:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="toprow">
+      <div class="eyebrow" id="eyebrow"></div>
+      <div class="langsw" role="group" aria-label="Language">
+        <button class="lsw" id="lang-ja" data-lang="ja">日本語</button>
+        <button class="lsw" id="lang-en" data-lang="en">English</button>
+      </div>
+    </div>
+    <h1 id="h1"></h1>
+    <p class="lead" id="lead"></p>
+  </header>
+
+  <div class="notice" id="notice"></div>
+
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <section class="race" id="race"></section>
+
+  <div class="filters">
+    <input id="q" type="search">
+    <div class="row" id="yearRow"><span class="lbl"></span></div>
+    <div class="row" id="distRow"><span class="lbl"></span></div>
+    <div class="row" id="kindRow"><span class="lbl"></span></div>
+    <div class="row" id="langRow"><span class="lbl"></span></div>
+    <div class="row" id="tagRow"><span class="lbl"></span></div>
+  </div>
+  <p class="tip" id="tip"></p>
+  <div class="count" id="count" aria-live="polite"></div>
+  <ul class="list" id="list"></ul>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const RACES = {
+  shinetsu: {
+    tab:"信越五岳", tabSub:"9月",
+    name:"信越五岳トレイルランニングレース",
+    sub:"長野県・新潟県 信越高原（斑尾エリア ほか）／ 毎年9月",
+    desc:"信越五岳（斑尾山・妙高山・黒姫山・戸隠山・飯縄山）を結ぶコース。プロデュースは石川弘樹さん。トレイルの割合が高くて「走れるコース」と言われますが、終盤の瑪瑙山（めのうやま）あたりの登りが山場になるという声が多いです。",
+    specs:[["100mile","約160km台・累積約7,100m・制限33時間"],["110km","約110km・累積約4,800〜4,900m・制限22時間"]],
+    callout:"2024年は悪天候のため、両種目とも戸隠でコースが短縮されました。その年の記録を読むときは、短縮版だったことを頭に入れておいてください。",
+    links:[["公式サイト","https://sfmt100.com/"]]
+  },
+  fuji: {
+    tab:"Mt.FUJI100", tabSub:"旧UTMF・4月",
+    name:"Mt.FUJI100（旧 UTMF）",
+    sub:"静岡県・山梨県 富士山周辺 ／ 毎年4月下旬",
+    desc:"2012年に「ウルトラトレイル・マウントフジ（UTMF）」として始まり、2024年の第10回から「Mt.FUJI100」に名前が変わりました。中身は同じ大会の流れなので、UTMF時代の完走記もコースの参考になります（ただしコースは年ごとに変わっています）。",
+    specs:[["FUJI100mi","約167km（2026年）"],["KAI70k","約70km（2026年）"],["ASUMI40k","約38.5km（2026年）"],["2026年の参加費","100mi ¥50,000 ／ 70k ¥30,000"]],
+    callout:"エントリーは例年秋です（2026年大会は2025年10〜11月に受付、12月に抽選結果）。ITRAポイントなどの参加資格があるので、早めに要項を確認しておくと安心です。",
+    links:[["公式サイト","https://mtfuji100.com/"],["過去大会のサイト","https://past.mtfuji100.com/2024/en/about/concept/"],["公式YouTube","https://www.youtube.com/channel/UCYTG7HNLx89OeaOsknc6mTg/videos"]]
+  },
+  kai: {
+    tab:"KAI70k", tabSub:"Mt.FUJI100の一種目",
+    name:"KAI70k（Mt.FUJI100）",
+    sub:"山梨県 富士吉田市 富士北麓公園 発着 ／ 4月下旬",
+    desc:"Mt.FUJI100の中の70km種目で、FUJI100miのコースの後半部分を走ります。100マイルの前に経験を積む一歩としても人気です。2023年まではUTMFの「KAI」として行われていました。",
+    specs:[["距離","約70km（年により69〜70km）"],["累積標高","約2,900〜3,500m（年により変動）"],["制限時間","21時間（2024年）"],["スタート","深夜0時（2024年）"]],
+    callout:"「KAI」で検索するときは「UTMF KAI」「Mt.FUJI100 KAI」の両方で探すと、昔の記録も見つかります。",
+    links:[["公式サイト","https://mtfuji100.com/"]]
+  }
+};
+
+/* kind: blog|video ; tags from the title/snippet only */
+const ITEMS = [
+  // 信越五岳 — blogs
+  {r:"shinetsu",k:"blog",t:"【2024】信越五岳110kmのペーサーしてきた話【大会中の過ごし方】",u:"https://note.com/mthkr/n/neef8fc909b35",y:2024,d:"110km",tags:["ペーサー・応援"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"【2025】信越五岳で今度は100mileのペーサーしてきた話",u:"https://note.com/mthkr/n/n3940914561c2",y:2025,d:"100mile",tags:["ペーサー・応援"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"2025信越五岳100mile",u:"https://note.com/bufferin9/n/n1acc1530a48a",y:2025,d:"100mile",tags:["完走記・レポート"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"信越五岳トレイルランニングレース2025",u:"https://ameblo.jp/timingman/entry-12930888883.html",y:2025,d:"",tags:["完走記・レポート"],s:"アメブロ"},
+  {r:"shinetsu",k:"blog",t:"信越五岳トレイルランニングレース2023 110km 完走！",u:"https://yamap.com/activities/26869622",y:2023,d:"110km",tags:["完走記・レポート"],s:"YAMAP"},
+  {r:"shinetsu",k:"blog",t:"リタイアから得るもの。「信越五岳トレイルランニングレース2023」100マイル レースレポート",u:"https://note.com/trail_story/n/nc4a574c590f4",y:2023,d:"100mile",tags:["DNF・リタイア"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"［レースレポート］160キロのトレランレース！信越五岳100マイル2023を走ってきました！",u:"https://note.com/gachio_running/n/nc0458110b4a4",y:2023,d:"100mile",tags:["完走記・レポート"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"［装備品紹介］160キロを走るトレイルランニングレースで使ったアイテム（信越五岳100mileレース）",u:"https://note.com/gachio_running/n/n45503d187dbe",y:2023,d:"100mile",tags:["装備・準備"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"2023信越五岳100mile振り返り（前編）",u:"https://note.com/barlaws_original/n/ne6b0efb2d9d9",y:2023,d:"100mile",tags:["完走記・レポート"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"2023信越五岳トレイルランニングレース100マイル、気持ちで掴み取った完走。",u:"https://note.com/m_orie0319/n/n1bc1e64e651d",y:2023,d:"100mile",tags:["完走記・レポート"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"【レースレポ】信越五岳110km①",u:"https://kentaro-osanpo.hatenablog.com/entry/2022/09/26/144441",y:2022,d:"110km",tags:["完走記・レポート"],s:"はてなブログ"},
+  {r:"shinetsu",k:"blog",t:"2022信越五岳トレイル110k 参戦記",u:"https://note.com/motizm/n/n2d45a8cde38c",y:2022,d:"110km",tags:["完走記・レポート"],s:"note"},
+  {r:"shinetsu",k:"blog",t:"信越五岳トレイルランニングレース 2022 その１",u:"https://bungo1103.hatenablog.com/entry/2022/09/20/220213",y:2022,d:"",tags:["完走記・レポート"],s:"はてなブログ"},
+  {r:"shinetsu",k:"blog",t:"信越五岳トレイルランニングレース１１０ｋｍレースレポート",u:"https://urakov.hatenablog.com/entry/2019/10/05/071707",y:2019,d:"110km",tags:["完走記・レポート"],s:"はてなブログ"},
+  // 信越五岳 — videos
+  {r:"shinetsu",k:"video",t:"2年連続DNFからのリベンジ！信越五岳トレイルランニングレース2025【100mileの大冒険】",u:"https://www.youtube.com/watch?v=LOd_fCQL4RQ",y:2025,d:"100mile",tags:["完走記・レポート"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"信越五岳110km（SFMT2025）2nd place",u:"https://www.youtube.com/watch?v=DxtQyddbuVc",y:2025,d:"110km",tags:["完走記・レポート"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"信越五岳トレイルランニングレース2025：LIVE 1《100 mile スタート》",u:"https://www.youtube.com/watch?v=XqOxZssLY9A",y:2025,d:"100mile",tags:["ライブ・大会映像"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"信越五岳トレイルランニングレース2024 - SHINETSU FIVE MOUNTAINS TRAIL 100mile/110km",u:"https://www.youtube.com/watch?v=T1wKSa3zkU0",y:2024,d:"",tags:["ライブ・大会映像"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"信越五岳トレイルランニングレース2023【仲間を応援してきた】",u:"https://www.youtube.com/watch?v=w4HsfyFIbdc",y:2023,d:"",tags:["ペーサー・応援"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"【信越五岳トレイルランニングレース2022 110km】完走目標で挑んだその結末は・・",u:"https://www.youtube.com/watch?v=6a-xZKepZE4",y:2022,d:"110km",tags:["完走記・レポート"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"信越五岳100mile 2022.9.17-19（4K）",u:"https://www.youtube.com/watch?v=j00pRiT8i5c",y:2022,d:"100mile",tags:["完走記・レポート"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"【信越五岳トレイルランニングレース～レース本編】胃腸対策が成功！快走フィニッシュ！",u:"https://www.youtube.com/watch?v=aU3W7feZ0FA",y:null,d:"",tags:["完走記・レポート","装備・準備"],s:"YouTube"},
+  {r:"shinetsu",k:"video",t:"【110㎞/100マイル】信越五岳の走り方【伊藤健太】",u:"https://www.youtube.com/watch?v=8-Oh8U0ztz0",y:null,d:"",tags:["コース解説"],s:"YouTube"},
+
+  // Mt.FUJI100 / UTMF — blogs
+  {r:"fuji",k:"blog",t:"Mt. FUJI100 2025 完走記",u:"https://note.com/electric_prophet/n/n728fd50a59cc",y:2025,d:"FUJI100mi",tags:["完走記・レポート"],s:"note"},
+  {r:"fuji",k:"blog",t:"Mt.FUJI 100 2025 レポ",u:"https://note.com/nimolog_/n/nde2f9cc7fdd5",y:2025,d:"",tags:["完走記・レポート"],s:"note"},
+  {r:"fuji",k:"blog",t:"Mt.FUJI 100 2025☆レポ①完走率など",u:"https://ameblo.jp/tanada-99/entry-12898213266.html",y:2025,d:"",tags:["完走記・レポート"],s:"アメブロ"},
+  {r:"fuji",k:"blog",t:"Mt.FUJI 100 2025🗻（活動日記）",u:"https://yamap.com/activities/39481371/article",y:2025,d:"",tags:["完走記・レポート"],s:"YAMAP"},
+  {r:"fuji",k:"blog",t:"Mt.FUJI100【20代で挑戦した最初で最後の100マイルレース】",u:"https://note.com/mthkr/n/n91418af079a1",y:2024,d:"FUJI100mi",tags:["完走記・レポート"],s:"note"},
+  {r:"fuji",k:"blog",t:"Mt.FUJI100 FUJI100mi（活動日記）",u:"https://yamap.com/activities/31211109/article",y:null,d:"FUJI100mi",tags:["完走記・レポート"],s:"YAMAP"},
+  {r:"fuji",k:"blog",t:"Mt.FUJI 100完走記①準備編",u:"https://note.com/myu_on/n/n336107b0f90b",y:null,d:"",tags:["装備・準備"],s:"note"},
+  {r:"fuji",k:"blog",t:"Mt.FUJI 100完走記③後半編",u:"https://note.com/myu_on/n/n57e9f2c30b00",y:null,d:"",tags:["完走記・レポート"],s:"note"},
+  {r:"fuji",k:"blog",t:"【トレランレース】2022年 UTMF（ウルトラ・トレイル・マウント・フジ）",u:"https://note.com/brave_sloth4720/n/n2edba807ccd9",y:2022,d:"UTMF時代",tags:["完走記・レポート"],s:"note"},
+  {r:"fuji",k:"blog",t:"UTMF 2022を終えて",u:"https://milestone81.com/en/blogs/blog/utmf_2022%E3%82%92%E7%B5%82%E3%81%88%E3%81%A6",y:2022,d:"UTMF時代",tags:["完走記・レポート"],s:"milestone81"},
+  {r:"fuji",k:"blog",t:"UTMF 2018 完走備忘録",u:"https://biyoushi.hatenablog.com/entry/2018/05/05/204120",y:2018,d:"UTMF時代",tags:["完走記・レポート"],s:"はてなブログ"},
+  {r:"fuji",k:"blog",t:"UTMF 2018の完走記",u:"https://ameblo.jp/elb/entry-12372150180.html",y:2018,d:"UTMF時代",tags:["完走記・レポート"],s:"アメブロ"},
+  {r:"fuji",k:"blog",t:"UTMFを3ヶ月で完走した備忘録",u:"https://note.com/keisuke_maruyama/n/n1a5df7dc96e5",y:null,d:"UTMF時代",tags:["完走記・レポート","装備・準備"],s:"note"},
+  {r:"fuji",k:"blog",t:"メディアが教えてくれないUTMF完走のヒント〜いまからでも間に合う買い足しアイテム〜",u:"https://note.com/emma_nak_note/n/nb5a7b836f6f1",y:null,d:"UTMF時代",tags:["装備・準備"],s:"note"},
+  {r:"fuji",k:"blog",t:"メディアが教えてくれないUTMF完走のヒント〜前日やレースで注意したい必携装備について〜",u:"https://note.com/emma_nak_note/n/n23d17bad59e3",y:null,d:"UTMF時代",tags:["装備・準備"],s:"note"},
+  // Mt.FUJI100 / UTMF — videos
+  {r:"fuji",k:"video",t:"Mt.FUJI 100 2025 LIVE - Part 2（日本語版ライブ配信）",u:"https://www.youtube.com/watch?v=OY54QeLcXro",y:2025,d:"",tags:["ライブ・大会映像"],s:"YouTube"},
+  {r:"fuji",k:"video",t:"Mt.FUJI100 2025 ブリーフィング LIVE（日本語放送）",u:"https://www.youtube.com/watch?v=YM9W1cw71nk",y:2025,d:"",tags:["コース解説"],s:"YouTube"},
+  {r:"fuji",k:"video",t:"Mt.FUJI100 2024",u:"https://www.youtube.com/watch?v=E6HkvmJ_BZA",y:2024,d:"",tags:["ライブ・大会映像"],s:"YouTube"},
+  {r:"fuji",k:"video",t:"【奮起】UTMF約165km山岳前編 寒さに震えた 泣いた…女子ランナー100mile完走記【UTMF2023・FUJI2023前編】",u:"https://www.youtube.com/watch?v=rnd7DnkIqhI",y:2023,d:"UTMF時代",tags:["完走記・レポート"],s:"YouTube"},
+  {r:"fuji",k:"video",t:"UTMF 2022 The Last Climbを体験してきた",u:"https://www.youtube.com/watch?v=aZrjXfPu5ww",y:2022,d:"UTMF時代",tags:["コース解説"],s:"YouTube"},
+  {r:"fuji",k:"video",t:"【エアUTMF】コース解説＜前半＞Start〜A2麓",u:"https://www.youtube.com/watch?v=7ry9a-L14yo",y:null,d:"UTMF時代",tags:["コース解説"],s:"YouTube"},
+  {r:"fuji",k:"video",t:"【エアUTMF】コース解説＜後半＞A7山中湖きらら〜Finish",u:"https://www.youtube.com/watch?v=jZ7I8Bt7BCU",y:null,d:"UTMF時代",tags:["コース解説"],s:"YouTube"},
+  {r:"fuji",k:"video",t:"UTMF練習方法 ウルトラトレイルマウント富士に向けた100マイル練習方法",u:"https://www.youtube.com/watch?v=c2RSsM-Rsec",y:null,d:"UTMF時代",tags:["装備・準備"],s:"YouTube"},
+
+  // KAI70k — blogs
+  {r:"kai",k:"blog",t:"Mt.Fuji100 2026の kai70を16時間切って完走した話 事前準備編",u:"https://note.com/funperoshi/n/n5e837e32852a",y:2026,d:"",tags:["装備・準備"],s:"note"},
+  {r:"kai",k:"blog",t:"Mt. FUJI KAIを走ってきました。",u:"https://alasixosaka.hatenablog.com/entry/2025/04/29/104336",y:2025,d:"",tags:["完走記・レポート"],s:"はてなブログ"},
+  {r:"kai",k:"blog",t:"Mt.FUJI 100 2024 KAI 70k 備忘録",u:"https://note.com/pico_san/n/n6871d95d14ad",y:2024,d:"",tags:["完走記・レポート"],s:"note"},
+  {r:"kai",k:"blog",t:"2024 KAI 70K ①",u:"https://ameblo.jp/mn14a1c/entry-12850118720.html",y:2024,d:"",tags:["完走記・レポート"],s:"アメブロ"},
+  {r:"kai",k:"blog",t:"Mt.FUJI100 2024 KAI70k（活動日記）",u:"https://yamap.com/activities/31367665/article",y:2024,d:"",tags:["完走記・レポート"],s:"YAMAP"},
+  {r:"kai",k:"blog",t:"UTMF 2023 KAIに出場してきました。",u:"https://ameblo.jp/agbaya2/entry-12799985408.html",y:2023,d:"UTMF時代",tags:["完走記・レポート"],s:"アメブロ"},
+  {r:"kai",k:"blog",t:"3カテ完走【KAI 70k】レースレポ",u:"https://note.com/mip0000/n/n8d3a95541e37",y:null,d:"",tags:["完走記・レポート"],s:"note"},
+  {r:"kai",k:"blog",t:"KAI70k 完走記（活動日記）",u:"https://yamap.com/activities/47720740/article",y:null,d:"",tags:["完走記・レポート"],s:"YAMAP"},
+  // KAI70k — videos
+  {r:"kai",k:"video",t:"富士山の周りの山々を巡る旅！KAI70K【2025】Mt.FUJI100",u:"https://www.youtube.com/watch?v=jkz5OzrgAv4",y:2025,d:"",tags:["完走記・レポート"],s:"YouTube"},
+  {r:"kai",k:"video",t:"Mt.FUJI 100 KAI70K 2024",u:"https://www.youtube.com/watch?v=ZtG7s9LsD_A",y:2024,d:"",tags:["完走記・レポート"],s:"YouTube"},
+  {r:"kai",k:"video",t:"【2024Mt FUJI100/KAI70】KAI2位争い、霜山のダウンヒル動画",u:"https://www.youtube.com/watch?v=fiiqt7IgLHs",y:2024,d:"",tags:["コース解説"],s:"YouTube"}
+];
+
+/* 2026-10-05 追加：YouTubeで直接検索して見つけた動画（タイトルは投稿者の元の表記） */
+const YT = id => "https://www.youtube.com/watch?v="+id;
+const V = (r,id,t,y,d,tags) => ({r,k:"video",t,u:YT(id),y,d,tags,s:"YouTube"});
+ITEMS.push(
+  // 信越五岳 2026
+  V("shinetsu","T4dEUOfkWBI","【2026信越五岳110KM（パタゴニアカップ）】日本最高峰トレランレース/HUMAN RACE/これがトレイルランニング/限界への挑戦/制限時間22時間/どこまで走り続けられる",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","9oURKgmQAXQ","【信越五岳110k2026＃1】あの日届かなかった景色へ。1年越しのリベンジ開幕",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","2uR9ufhTUgI","信越五岳トレイルランニングレース2026 110K 初100km超に挑戦！",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","dHucQT0n-XE","信越五岳トレイルランニングレース2026 110km",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","IiIjLCgjRpM","【信越五岳2026】トレラン完全初心者が5ヶ月で110kmに初挑戦｜60kmでリタイアを決めた先に",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","81LLshCY1uQ","私たちの信越五岳110km〜関門をくぐり抜けた先に見えた景色〜ぺーサー編",2026,"110km",["ペーサー・応援"]),
+  V("shinetsu","HCyUIRgq530","【信越五岳トレイルランニングレース100Mile 2026】ひとりでは辿り着けなかった、165km先のゴール。そのまだ、先へ。",2026,"100mile",["完走記・レポート"]),
+  V("shinetsu","q7y-f1w5VOg","【信越五岳100mile】台風到来で満身創痍。限界を超えた100マイラーへの初挑戦",2026,"100mile",["完走記・レポート"]),
+  V("shinetsu","9i_Y6BcJmJI","2026信越五岳トレイルランニングレース（100マイル）",2026,"100mile",["完走記・レポート"]),
+  V("shinetsu","fnrKpLLnofk","諦めそうになっているランナーへ【信越五岳100マイル】",2026,"100mile",["完走記・レポート"]),
+  V("shinetsu","Xgrr-Vs25Gg","【悔し涙】信越五岳100マイルにチャレンジ！もっと進みたかったのに…53㎞でDNFになった記録",2026,"100mile",["DNF・リタイア"]),
+  V("shinetsu","RRKaXIe9MTc","信越五岳100mile「限界ギリギリで闘う全てのチャレンジャーに送りたい」【レースレポート ペーサー編】",2026,"100mile",["ペーサー・応援"]),
+  V("shinetsu","OOmO0WG47bI","家族は旅行、父は合宿へ。信越五岳100mileに向けた我が家の1週間",2026,"100mile",["装備・準備"]),
+  V("shinetsu","gzHz8GjSU3Q","【ピンチ】もうすぐ信越五岳100マイルなんだけど・・・。",2026,"100mile",["装備・準備"]),
+  V("shinetsu","WA9_bnLMm2g","【2026信越五岳】トレラン準備編/装備品・必携品・補給食紹介/ザックの中身・ウェア・ギア・シューズetc",2026,"",["装備・準備"]),
+  V("shinetsu","oV9lY9F0xFE","【レース動画】信越五岳初出場。大雨と強風の中の激闘。",2026,"",["完走記・レポート"]),
+  V("shinetsu","tgbIJ-R7OUE","信越五岳トレイルランニングレース2026の振り返り",2026,"",["完走記・レポート"]),
+  V("shinetsu","IVbWrXxls8A","限界を超えていくウルトラトレイルランナーたちに密着！2026信越五岳に挑むTEAM OSADAメンバーたち",2026,"",["ライブ・大会映像"]),
+  V("shinetsu","tG8ruQ8muv8","信越五岳トレイルランニングレース2026 LIVE1｜ブース紹介・100マイルスタート",2026,"100mile",["ライブ・大会映像"]),
+  V("shinetsu","nFMOMwOZbjE","信越五岳トレイルランニングレース 2026 LIVE 2｜110kmスタート・100mileレース中継",2026,"",["ライブ・大会映像"]),
+  V("shinetsu","dl6jmANOF-o","信越五岳トレイルランニングレース2026 LIVE3｜100mile・110km フィニッシュLIVE",2026,"",["ライブ・大会映像"]),
+  // 信越五岳 2023〜2025 追加分
+  V("shinetsu","2EiX_AsWtDY","【2025信越五岳100mile（パタゴニアカップ）】二部作・本編/挑戦者であれ/信越100マイル初挑戦はいかに？！",2025,"100mile",["完走記・レポート"]),
+  V("shinetsu","KFq7hQ1LGCA","【信越五岳2025】白川ゆうと、100マイル3位の記録【前編】",2025,"100mile",["完走記・レポート"]),
+  V("shinetsu","fonr_JUbCdA","【信越五岳100マイル】3位に入ったランナーの装備とは？",2025,"100mile",["装備・準備"]),
+  V("shinetsu","Jl1_PU2g9os","【2025 信越五岳100mile優勝】小原将寿、激走20時間の裏側",2025,"100mile",["ライブ・大会映像"]),
+  V("shinetsu","7YUfALieEWI","【完走率約50％！？】信越五岳トレイルランニング2025 初のペーサーに挑戦！トレラン女子100マイルへの道",2025,"100mile",["ペーサー・応援"]),
+  V("shinetsu","_xnodpcVqjk","【信越の悲劇】信越五岳トレイルレース110k 2025一気見",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","gljlQcMdfnQ","信越五岳トレイルランニングレース2025〜パタゴニアCUP〜 100mile/110km",2025,"",["ライブ・大会映像"]),
+  V("shinetsu","pu-z5OKQWRg","信越五岳トレイルランニングレース 2024～パタゴニアCUP～【100mile】5回目の100mile挑戦！",2024,"100mile",["完走記・レポート"]),
+  V("shinetsu","TPete0nTuyE","2024信越五岳トレイルランニングレース LONG MOVIE",2024,"",["ライブ・大会映像"]),
+  V("shinetsu","Tbw88aOeDB0","信越五岳トレイルランニングレース『2023 Official Movie』",2023,"",["ライブ・大会映像"]),
+
+  // Mt.FUJI100 2026
+  V("fuji","aTfLPZa-TT0","【Mt.FUJI100 2026】Highlight Movie",2026,"",["ライブ・大会映像"]),
+  V("fuji","MvgA8TTUTu4","【Mt.FUJI100 2026】FUJI100mi Highlight Movie",2026,"FUJI100mi",["ライブ・大会映像"]),
+  V("fuji","HJToYknaT-k","Mt.FUJI 100 2026 LIVE - Part 2（日本語版ライブ配信）",2026,"",["ライブ・大会映像"]),
+  V("fuji","Rj_NfejpaTI","Mt.FUJI100 2026 ブリーフィング LIVE（日本語放送）",2026,"",["コース解説"]),
+  V("fuji","o2wRgOfceDw","Mt.FUJI100 FUJI100mi 私的サポーター説明会（日本語放送）",2026,"FUJI100mi",["ペーサー・応援"]),
+  V("fuji","SKOq2mdrK5M","【Mt.FUJI100 2026】1年間の集大成。トレラン女子ランナー100マイル完走への挑戦【Part1】",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","JZKTjh9Fu0c","【Mt.FUJI100 2026】1年間の集大成。トレラン女子ランナー100マイル完走への挑戦【Part2】",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","7mi6Mvmkfxc","【Mt.FUJI100 2026】トレラン企画の集大成！必携品・おすすめギア紹介！【トレラン女子100マイルへの道】",2026,"FUJI100mi",["装備・準備"]),
+  V("fuji","c4wGDOuE7JA","【レースレポート】Mt.FUJI100 2026｜初100マイルに挑戦｜終わらないアップダウンと過酷な45時間の結末",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","8RBBgSeeug4","競技歴8年にして挑む168kmを走った記録 2026 Mt.FUJI100 夢の100マイラーになった日",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","rtZr1GbYErA","Mt Fuji100 2026 ５２歳が１４年間夢見た舞台でマイラーになれるのか？",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","991yHtMZvso","Mt.FUJI100mi 2026、完走か、撃沈か。38.5時間、Legend10位以内の挑戦が始まる！【レースレポート】",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","XGLA6X6md14","2026【Mt.fuji100】100マイルレース長年の夢叶える事ができるのか？",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","C_BXraVh64E","165km,6461mD+.富士山周辺の山を走る！2026年4月24~26日Mt.FUJI100",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","UKVxjIpHXnU","Mt.FUJI 100 2026 Vol.1",2026,"",["完走記・レポート"]),
+  V("fuji","l7Guaw711oY","Mt.FUJI 100 2026 FINAL",2026,"",["完走記・レポート"]),
+  V("fuji","oEvQPyjbJEM","Mt.FUJI100 ASUMI40K Part 1 04/25/2026",2026,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","-VGuwwwGlTM","【Mt.FUJI100 2025】Highlight Movie",2025,"",["ライブ・大会映像"]),
+
+  // KAI70k 2026
+  V("kai","yF-Gd6PCdJg","【初挑戦】KAI70K（Mt.FUJI100／2026）",2026,"",["完走記・レポート"]),
+  V("kai","z0528ljsBJ8","Mt.FUJI100 2026 KAI70K",2026,"",["完走記・レポート"]),
+  V("kai","X7jeV77152E","【Mt.FUJI100 2026 KAI70K】今年度最年少完走者・大学生ランナー",2026,"",["完走記・レポート"]),
+  V("kai","Dzvn3k03NpU","【トレラン】Mt.Fuji KAI70K",2026,"",["完走記・レポート"]),
+  V("kai","Pdry5GfzeUY","生粋の貧脚ランナーの僕がMt.FUJI100〈KAI70K〉を走ってきた。",2026,"",["完走記・レポート"]),
+  V("kai","ih4VGKiB6eU","Mt. Fuji100 | KAI70 2026 My First 70K Trail Race in Japan（英語）",2026,"",["完走記・レポート"]),
+  V("kai","fRd0HjAAA9Q","Mt.FUJI 100, KAI 70k 18時間台で完走_April 2025",2025,"",["完走記・レポート"])
+);
+
+/* 2026-10-05 追加：英語・日英の記事と動画、KAIの追加動画 */
+const A = (r,u,t,y,d,tags,s,lg,extra) => Object.assign({r,k:"blog",t,u,y,d,tags,s,lg}, extra||{});
+const VL = (r,id,t,y,d,tags,lg) => Object.assign(V(r,id,t,y,d,tags),{lg});
+ITEMS.push(
+  // Mt.FUJI100 / UTMF — English & bilingual articles
+  A("fuji","https://www.houyhnhnm.jp/feature/1125474/","マウントフジ100で見つけた洒落者たちを突撃スナップ！（2026）",2026,"",["スナップ・特集"],"HOUYHNHNM","both",{tEn:"A crash course in the fashionable people found at the Mount Fuji 100! (2026)",uEn:"https://www.houyhnhnm.jp/en/feature/1125474/"}),
+  A("fuji","https://www.houyhnhnm.jp/feature/854424/","マウントフジ100で見つけた洒落者たちを突撃スナップ！（2024）",2024,"FUJI100mi",["スナップ・特集"],"HOUYHNHNM","both",{tEn:"A crash course in the fashionable people found at the Mount Fuji 100! (2024)",uEn:"https://www.houyhnhnm.jp/en/feature/854424/"}),
+  A("fuji","https://www.houyhnhnm.jp/feature/258726/","季節外れの降雪により、まさかの結末。フイナム ランニング クラブ♡のUTMF参戦記。",2019,"UTMF時代",["完走記・レポート","スナップ・特集"],"HOUYHNHNM","both",{uEn:"https://www.houyhnhnm.jp/en/feature/258726"}),
+  A("fuji","https://www.houyhnhnm.jp/feature/180084/","168キロ走った先に何が見えたのか？ フイナム ランニング クラブ♡のUTMF参戦記。",2018,"UTMF時代",["完走記・レポート","スナップ・特集"],"HOUYHNHNM","both",{tEn:"What did you see after running 168 km? HOUYHNHNM RUNNING CLUB's entry in UTMF",uEn:"https://www.houyhnhnm.jp/en/feature/180084"}),
+  A("fuji","https://trailrunningspain.com/2025/04/26/mount-fuji-100-results-2025-mayayo/","MOUNT FUJI 100 RACE RESULTS 2025: Gold for Joaquín López and Cheung Man-yee",2025,"FUJI100mi",["ニュース・結果"],"Trail Running Spain","en"),
+  A("fuji","https://en.mtfuji100.com/news/20240426-2/","Mount Fuji 100: Courtney Dauwalter (USA) and Deng Guoming (China) win the FUJI 100mi",2024,"FUJI100mi",["ニュース・結果"],"Mt.FUJI100 公式","en"),
+  A("fuji","https://www.outdoorjapan.com/?p=2142","Race Report: Ultra Trail Mt. Fuji 2013",2013,"UTMF時代",["完走記・レポート"],"Outdoor Japan","en"),
+  A("fuji","https://garyrobbinsrun.com/blog/2013/05/a-100-mile-journey-around-mt-fuji/","A 100 Mile Journey Around Mt. Fuji",2013,"UTMF時代",["完走記・レポート"],"Gary Robbins","en"),
+  A("fuji","https://www.irunfar.com/2012-ultra-trail-mount-fuji-profiled","2012 Ultra Trail Mount Fuji Profiled",2012,"UTMF時代",["ニュース・結果"],"iRunFar","en"),
+  // Mt.FUJI100 / UTMF — English videos
+  VL("fuji","JKfxSxkfr8w","RACE RECAP - Mt. Fuji 100 2025",2025,"FUJI100mi",["ライブ・大会映像"],"en"),
+  VL("fuji","zI6QKeYNBso","Mt.FUJI100 2024 AfterMovie",2024,"",["ライブ・大会映像"],"en"),
+  VL("fuji","2r5DB6dA0-w","The ULTRA-TRAIL Mt. FUJI 2024",2024,"FUJI100mi",["完走記・レポート"],"en"),
+  VL("fuji","-nwMoSXX-6c","Mt. FUJI 100振り返り - Guomin DengとCourtney Dauwalterの勝利 | Mt. FUJI 100 (ex-UTMF) 2024 race recap",2024,"FUJI100mi",["ニュース・結果"],"both"),
+  VL("fuji","KKtY5cZ5UOo","The Adventure of a Lifetime - Mount Fuji 100 Miles (Ultra Running Documentary)",null,"FUJI100mi",["完走記・レポート"],"en"),
+  VL("fuji","ysNFK-G4bI4","Chris Myers Mt. Fuji 100 Mile First Place",null,"FUJI100mi",["完走記・レポート"],"en"),
+  VL("fuji","VxagZVh7L3A","Mt Fuji 100 Course Fly Over",null,"FUJI100mi",["コース解説"],"en"),
+  VL("fuji","u7QPkS5v_VI","UTMF - Ultra Trail Mt Fuji 2015",2015,"UTMF時代",["完走記・レポート"],"en"),
+  // KAI70k — English & extra
+  A("kai","https://en.mtfuji100.com/news/20240427-3/","Andreu Simon and Yuri Yoshizumi win the KAI 70k",2024,"",["ニュース・結果"],"Mt.FUJI100 公式","en"),
+  A("kai","https://trailrunningspain.com/2024/04/28/mount-fuji-100-2024-kai70k-gold-andreu-simon-and-yuri-yoshizumi-world-trail-majors/","Mount Fuji 100 2024 KAI70k: Gold for Andreu Simon and Yuri Yoshizumi",2024,"",["ニュース・結果"],"Trail Running Spain","en"),
+  A("kai","https://www.paagoworks.com/en/blogs/magazine/ultratrail-mtfuji-natsumi-yamauchi","ULTRA-TRAIL Mt.FUJI 2023 KAI Race Report / Interview – Natsumi Yamauchi",2023,"UTMF時代",["完走記・レポート"],"PaaGo WORKS","en"),
+  VL("kai","AIH9aEclVZc","Shen Jiasheng | Mt. Fuji Kai 70k",2025,"",["ライブ・大会映像"],"en"),
+  V("kai","5XjefIOggNQ","Mt.FUJI 100 KAI 70k（還暦ランナー）",2026,"",["完走記・レポート"]),
+  V("kai","z1yl7AcwhFM","【癒しのトレイル】Mt. FUJI 100 KAI 70k 2025 レースレポート",2025,"",["完走記・レポート"]),
+  V("kai","FMjW6jjwpRI","【Mt.FUJI 100】トレラン歴1年の集大成をと思いきや持病でリタイア寸前！？【KAI70】",2024,"",["完走記・レポート"]),
+  V("kai","TTL0lTc1UhY","【UTMF】初代チャンピオンになりました【KAI69k】",2022,"UTMF時代",["完走記・レポート"]),
+  // 信越五岳 — extra
+  V("shinetsu","5CMrzTjV8pI","信越五岳2024 SHINETSU FIVE MOUNTAINS TRAIL 100mile",2024,"100mile",["完走記・レポート"]),
+  VL("shinetsu","Cpb8BwOhgBU","田中裕康 Hiroyasu Tanaka 信越五岳トレイルランニングレース Shinetsu Five Mountains Trail 2017 100マイル・優勝インタビュー",2017,"100mile",["ライブ・大会映像"],"both")
+);
+/* 2026-11-06 追加：noteの2026年体験記（note内検索）とYouTubeの新着 */
+ITEMS.push(
+  A("shinetsu","https://note.com/mthkr/n/nffe3913370b0","【2026】信越五岳110kmにとうとう選手として参加してきた話",2026,"110km",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/ample_pika3693/n/n6871b8b83479","【記録】2026信越五岳トレイルランニングレース110km",2026,"110km",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/ample_pika3693/n/n1873d868e11f","【装備】2026信越五岳110kmで活躍した装備",2026,"110km",["装備・準備"],"note","ja"),
+  A("shinetsu","https://note.com/oisiii_nikki/n/n53034436d5f5","2026信越五岳110k🥉(レース編)",2026,"110km",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/oisiii_nikki/n/n23b0c182d1d1","2026 信越五岳110km🥉 (準備編)",2026,"110km",["装備・準備"],"note","ja"),
+  A("shinetsu","https://note.com/kaitz_trail/n/n4dbf9392a6ff","信越五岳トレイルランニングレース 2026 〜パタゴニアCUP～ 110K",2026,"110km",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/yagyu369/n/n5baea777fb73","信越五岳110kを走って",2026,"110km",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/super_laelia792/n/n05438508c185","年齢を言い訳にしない50代ランナー♯4 父に背中を押された信越五岳110K",2026,"110km",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/bigchallenge/n/n4159c53c476d","60kmでリタイアを決めた僕が、残り50kmを走れた理由｜信越五岳110km完走記",2026,"110km",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/d_inay/n/ncbaf3f65a136","信越五岳110K（DNF）",2026,"110km",["DNF・リタイア"],"note","ja"),
+  A("shinetsu","https://note.com/gunsong_74/n/na49a60e0b1e9","信越五岳２０２６ １００マイル完走記",2026,"100mile",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/sasataaaaa/n/n6b818cfbf03c","信越五岳100mile完走記❶〜クリック合戦から当日STARTまで。月間平均210kmからの挑戦〜",2026,"100mile",["装備・準備"],"note","ja"),
+  A("shinetsu","https://note.com/sasataaaaa/n/n59aacf02c807","信越五岳100mile完走記❷〜STARTからFINISHまで。頑張れるって当たり前じゃない〜",2026,"100mile",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/113123/n/ne1285dfa3940","【100mile】信越五岳を走ったんだぜ",2026,"100mile",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/tasty_deer200/n/ne79dc923fb53","信越五岳100MILE トレイルランニングレースの振り返り",2026,"100mile",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/20206_moose7076/n/n8f28f0f6c466","悔しさと出し切った感の信越五岳(SFMT)初の100マイル 振り返り",2026,"100mile",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/20206_moose7076/n/nc7cbb165226e","信越五岳 振り返り② 補給食編",2026,"100mile",["装備・準備"],"note","ja"),
+  A("shinetsu","https://note.com/yzyzyzyz0131/n/n29340a85c1f0","信越五岳100mileのあれこれ。",2026,"100mile",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/huge_drm7777/n/nb47d300846bc","信越五岳2026――DNF 泥と渋滞、約3kmのロスト。その先に見えた来年の課題",2026,"100mile",["DNF・リタイア"],"note","ja"),
+  A("shinetsu","https://note.com/huge_drm7777/n/ndd47ec0e9620","信越五岳2026番外編――100マイルは、スタートする前から始まっている。",2026,"100mile",["装備・準備"],"note","ja"),
+  A("shinetsu","https://note.com/deegu/n/n6da6f19c677b","2026信越五岳100mileペーサー体験記①",2026,"100mile",["ペーサー・応援"],"note","ja"),
+  A("shinetsu","https://note.com/deegu/n/n31b81d6b959d","2026信越五岳100mileペーサー体験記②",2026,"100mile",["ペーサー・応援"],"note","ja"),
+  A("shinetsu","https://note.com/shiny_phlox420/n/n681acc17ee18","信越五岳トレイル2026(100Mile) 初めてのペーサーの記録",2026,"100mile",["ペーサー・応援"],"note","ja"),
+  A("shinetsu","https://note.com/runsae40/n/n070a6a897f9b","信越五岳ペーサー日誌",2026,"",["ペーサー・応援"],"note","ja"),
+  A("shinetsu","https://note.com/yukaritorunning/n/n449274b8a400","信越五岳応援記録",2026,"",["ペーサー・応援"],"note","ja"),
+  A("shinetsu","https://note.com/alive_falcon9878/n/ne5808bd9f5f3","ep.114【信越五岳トレイルランレース2026】応援",2026,"",["ペーサー・応援"],"note","ja"),
+  A("shinetsu","https://note.com/alive_falcon9878/n/n13519648fbab","ep.115【信越五岳トレイルランレース2026】まさかのサポート劇",2026,"",["ペーサー・応援"],"note","ja"),
+  A("shinetsu","https://note.com/daosun1005/n/nd5ecf7be53e1","復活の信越五岳①",2026,"",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/daosun1005/n/na8b0ff2097c6","復活の信越五岳②",2026,"",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/murataka7552/n/n19c1fba02b2a","信越五岳トレイルレース2026パタゴニアカップ〜出場備忘録",2026,"",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/euthalia_patala/n/ndcf2a810d6fe","2026 信越五岳 トレイルランニングレース (レース編)",2026,"",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/euthalia_patala/n/nca80e953f466","2026 信越五岳 トレイルランニングレース (装備・準備編)",2026,"",["装備・準備"],"note","ja"),
+  A("shinetsu","https://note.com/maru0814/n/n5930e347a3c0","完走しても終わらない～実録！信越五岳2026出走記～",2026,"",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/dax65498/n/nfe15e27d2145","2026信越五岳トレイルランニングレース",2026,"",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/tsutomut/n/n3c51d4d63490","信越五岳 私的記録・感想",2026,"",["完走記・レポート"],"note","ja"),
+  A("shinetsu","https://note.com/masakioftheworld/n/n6168b33805f9","信越五岳2026｜今年のレースをザックリと振り返る",2026,"",["完走記・レポート"],"note","ja"),
+  V("shinetsu","gMydd1sWqos","なぜ、トップを走りながらリタイアしたのか。【信越五岳100mile 2026】",2026,"100mile",["DNF・リタイア"]),
+  V("shinetsu","4jgYrT2aYw0","【初の挑戦】2026信越五岳100mileサポートの記録",2026,"100mile",["ペーサー・応援"]),
+  V("shinetsu","WvC_qcVD4JA","信越五岳2026 100マイル結果｜163km走って、1位と2位の差は3分56秒",2026,"100mile",["ニュース・結果"]),
+  V("shinetsu","C3TCQ55yAno","信越五岳2026｜163km・制限33時間。最初の53kmに関門が無く、次が時速6.4km",2026,"100mile",["コース解説"]),
+  V("shinetsu","ElOSFSYpLwE","山を160㎞走るので10000kcal用意した 信越五岳トレイルランニングレース",2026,"100mile",["装備・準備"]),
+  V("shinetsu","BxQ3222Y8a4","#17【心配事】信越五岳100マイル(163km)に挑む直前リアルな4日間vlog",2026,"100mile",["装備・準備"]),
+  V("shinetsu","pt9ZgSuTAcs","【信越五岳110k2026＃3】永遠に続く林道。新たな不安",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","9nm_REbw8J8","2026信越五岳110km かなり端折って4分少しの動画",2026,"110km",["完走記・レポート"])
+);
+ITEMS.forEach(i => { if(!i.lg) i.lg = "ja"; });
+{ const k = ITEMS.find(i=>i.u.endsWith("ih4VGKiB6eU")); if(k){ k.lg="en"; k.t="Mt. Fuji100 | KAI70 2026 My First 70K Trail Race in Japan (Brutal Night Run)"; } }
+
+/* English text for each race */
+Object.assign(RACES.shinetsu, {en:{
+  tab:"Shinetsu 5 Mountains", tabSub:"Sept",
+  name:"Shinetsu Five Mountains Trail Race",
+  sub:"Shinetsu Highlands, Nagano & Niigata (Madarao area) / every September",
+  desc:"A course linking five peaks — Madarao, Myoko, Kurohime, Togakushi and Iizuna — produced by trail runner Hiroki Ishikawa. Mostly on trail and known as a \"runnable\" course, though many runners name the late climb around Mt. Meno as the crux.",
+  specs:[["100 mile","approx. 160+ km · approx. 7,100 m D+ · 33 h limit"],["110 km","approx. 110 km · approx. 4,800–4,900 m D+ · 22 h limit"]],
+  callout:"In 2024 both races were shortened at Togakushi due to bad weather. English-language reports for this race are still rare — a gap this page hopes to fill.",
+  links:[["Official site","https://sfmt100.com/en/outline-en/"]]}});
+Object.assign(RACES.fuji, {en:{
+  tab:"Mt.FUJI100", tabSub:"ex-UTMF · April",
+  name:"Mt.FUJI100 (formerly UTMF)",
+  sub:"Around Mt. Fuji, Shizuoka & Yamanashi / late April",
+  desc:"Started in 2012 as Ultra-Trail Mt. Fuji (UTMF) and renamed Mt.FUJI100 from its 10th edition in 2024; part of the World Trail Majors. Reports from the UTMF years are still useful for the course feel, but the route changes year to year.",
+  specs:[["FUJI100mi","approx. 167 km (2026)"],["KAI70k","approx. 70 km (2026)"],["ASUMI40k","approx. 38.5 km (2026)"],["2026 entry fee","100mi ¥50,000 / 70k ¥30,000"]],
+  callout:"Entries usually open in autumn (for 2026: Oct–Nov 2025, lottery results in December). ITRA-point qualifications apply, so check the regulations early.",
+  links:[["Official site (EN)","https://en.mtfuji100.com/"],["Past editions","https://past.mtfuji100.com/2024/en/about/concept/"],["Official YouTube","https://www.youtube.com/channel/UCYTG7HNLx89OeaOsknc6mTg/videos"]]}});
+Object.assign(RACES.kai, {en:{
+  tab:"KAI70k", tabSub:"part of Mt.FUJI100",
+  name:"KAI70k (Mt.FUJI100)",
+  sub:"Start/finish: Fuji Hokuroku Park, Fujiyoshida, Yamanashi / late April",
+  desc:"The 70 km race of Mt.FUJI100, covering the second half of the FUJI100mi course. Popular as a step toward 100 miles. Until 2023 it was held as \"KAI\" within UTMF.",
+  specs:[["Distance","approx. 70 km (69–70 km by year)"],["Elevation gain","approx. 2,900–3,500 m (varies by year)"],["Time limit","21 h (2024)"],["Start","midnight (2024)"]],
+  callout:"When searching, try both \"UTMF KAI\" and \"Mt.FUJI100 KAI\" to find older reports.",
+  links:[["Official site (EN)","https://en.mtfuji100.com/"]]}});
+
+const TAGS = ["完走記・レポート","DNF・リタイア","ペーサー・応援","装備・準備","コース解説","ライブ・大会映像","ニュース・結果","スナップ・特集"];
+const TAG_EN = {"完走記・レポート":"Race report","DNF・リタイア":"DNF","ペーサー・応援":"Pacer / crew","装備・準備":"Gear & prep","コース解説":"Course guide","ライブ・大会映像":"Live / official video","ニュース・結果":"News & results","スナップ・特集":"Features"};
+const DIST_EN = {"UTMF時代":"UTMF era"};
+const SRC_EN = {"アメブロ":"Ameba Blog","はてなブログ":"Hatena Blog","Mt.FUJI100 公式":"Mt.FUJI100 official"};
+const LG_LABEL = {ja:{ja:"日本語",en:"英語",both:"日英"}, en:{ja:"Japanese",en:"English",both:"JA / EN"}};
+const STR = {
+  ja:{eyebrow:"TRAIL RACE LOGBOOK · 試作版", h1:'エントリー前に読む<span class="tape">体験記</span>',
+    lead:"大会ごとに、先輩ランナーの完走記・リタイア記・ペーサー記・動画をまとめました。エントリーを迷っているときや、コースの雰囲気をつかみたいときにどうぞ。",
+    notice:"<b>試作版です。</b>2026年10月5日〜11月6日にt2.srlが集めたリンクです（2026年の体験記はnote内・YouTube内を直接検索して追加）。タイトルは投稿時の表記のまま載せていて、各記事・動画の中身までは一件ずつ確認していません。大会データは年によって変わるので、最新の情報は必ず公式サイトで確かめてください。",
+    q:"キーワードで絞り込み（例：DNF、装備、2025）", year:"年", dist:"種目", kind:"種類", lang:"言語", tag:"内容", all:"すべて",
+    blog:"ブログ", video:"動画", yearUnknown:"年不明", distUnknown:"種目不明", yr:y=>y+"年", count:n=>n+"件",
+    empty:"条件に合う記事がありません。絞り込みを外してみてください。", tip:"",
+    footer:"<div>リンク先の記事・動画の権利は、それぞれの作者にあります。このページは紹介とリンクだけを載せています。</div><div>作成：t2.srl／ 最終更新 2026-11-06</div>"},
+  en:{eyebrow:"TRAIL RACE LOGBOOK · PROTOTYPE", h1:'Read the <span class="tape">race stories</span> before you enter',
+    lead:"Finish reports, DNF stories, pacer diaries and videos from runners who went before you — collected race by race. Use it when you're deciding whether to enter a Japanese trail race, or want a feel for the course.",
+    notice:"<b>Prototype.</b> Links collected 5 Oct – 6 Nov 2026. Titles are shown as their authors wrote them, and we haven't reviewed every article or video. Race figures change year to year — always confirm on the official site.",
+    q:"Filter by keyword (e.g. DNF, gear, 2025)", year:"Year", dist:"Race", kind:"Type", lang:"Language", tag:"Topic", all:"All",
+    blog:"Blog", video:"Video", yearUnknown:"Year unknown", distUnknown:"Unspecified", yr:y=>String(y), count:n=>n+(n===1?" link":" links"),
+    empty:"Nothing matches these filters. Try clearing one.",
+    tip:"Most stories are in Japanese. Your browser's translate feature works on most blog posts, and YouTube can auto-translate captions.",
+    footer:"<div>All articles and videos belong to their creators. This page only introduces and links to them.</div><div>Curated by t2.srl · Updated 2026-11-06</div>"}
+};
+
+let state = {race:"shinetsu", kind:"all", tag:null, year:null, dist:null, lang:null, q:""};
+let UI = "ja";
+const yearKey = i => i.y ? String(i.y) : "unknown";
+const distKey = i => i.d || "unknown";
+try{ const saved = localStorage.getItem("tn-race"); if(saved && RACES[saved]) state.race = saved; }catch(e){}
+try{ const l = localStorage.getItem("tn-ui"); if(l==="en"||l==="ja") UI = l; }catch(e){}
+if(RACES[location.hash.slice(1)]) state.race = location.hash.slice(1);
+if(location.hash==="#en") UI = "en";
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const S = () => STR[UI];
+const R = id => UI==="en" ? RACES[id].en : RACES[id];
+const tagL = t => UI==="en" ? TAG_EN[t] : t;
+const distL = d => d==="unknown" ? S().distUnknown : (UI==="en" ? (DIST_EN[d]||d) : d);
+
+function renderChrome(){
+  document.documentElement.lang = UI;
+  document.title = UI==="en" ? "Trail Race Logbook" : "トレラン体験記ナビ";
+  $("eyebrow").textContent = S().eyebrow; $("h1").innerHTML = S().h1; $("lead").textContent = S().lead;
+  $("notice").innerHTML = S().notice; $("footer").innerHTML = S().footer;
+  $("q").placeholder = S().q; $("q").setAttribute("aria-label", S().q);
+  [["yearRow","year"],["distRow","dist"],["kindRow","kind"],["langRow","lang"],["tagRow","tag"]].forEach(([r,k]) => $(r).querySelector(".lbl").textContent = S()[k]);
+  $("tip").textContent = S().tip; $("tip").hidden = !S().tip;
+  document.querySelectorAll(".lsw").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===UI));
+}
+function renderTabs(){
+  $("tabs").innerHTML = Object.keys(RACES).map(id => { const r = R(id);
+    return `<button class="tab" role="tab" id="tab-${id}" aria-selected="${id===state.race}" data-race="${id}">${esc(r.tab)}<small>${esc(r.tabSub)}</small></button>`; }).join("");
+}
+function renderRace(){
+  const r = R(state.race);
+  $("race").innerHTML = `
+    <div><h2>${esc(r.name)}</h2><p class="sub">${esc(r.sub)}</p></div>
+    <p>${esc(r.desc)}</p>
+    <div class="specs">${r.specs.map(([k,v])=>`<div class="spec"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join("")}</div>
+    <div class="callout">${esc(r.callout)}</div>
+    <div class="links">${r.links.map(([t,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("")}</div>`;
+}
+function chipRow(rowId, prefix, options, current, onPick){
+  const row = $(rowId); row.querySelectorAll(".chip").forEach(n=>n.remove());
+  [["", S().all], ...options].forEach(([v,l],idx) => { const b=document.createElement("button"); b.className="chip"; b.id=prefix+idx; b.textContent=l;
+    b.setAttribute("aria-pressed", (current||"")===v); b.onclick=()=>{onPick(v||null); renderFilters(); renderList();}; row.appendChild(b); });
+}
+function renderFilters(){
+  const inRace = ITEMS.filter(i=>i.r===state.race);
+  const years = [...new Set(inRace.map(yearKey))].sort((a,b)=> a==="unknown"?1 : b==="unknown"?-1 : b-a);
+  chipRow("yearRow","year-", years.map(y=>[y, y==="unknown"?S().yearUnknown:y]), state.year, v=>state.year=v);
+  const dists = [...new Set(inRace.map(distKey))].sort((a,b)=> a==="unknown"?1 : b==="unknown"?-1 : a.localeCompare(b));
+  $("distRow").hidden = dists.length < 2;
+  chipRow("distRow","dist-", dists.map(d=>[d, distL(d)]), state.dist, v=>state.dist=v);
+  chipRow("kindRow","kind-", [["blog",S().blog],["video",S().video]], state.kind==="all"?null:state.kind, v=>state.kind=v||"all");
+  chipRow("langRow","lang-", [["ja",LG_LABEL[UI].ja],["en",UI==="en"?"English / bilingual":"英語・日英"]], state.lang, v=>state.lang=v);
+  const tr = $("tagRow"); tr.querySelectorAll(".chip").forEach(n=>n.remove());
+  const present = new Set(inRace.flatMap(i=>i.tags));
+  TAGS.filter(t=>present.has(t)).forEach(t => { const b=document.createElement("button"); b.className="chip"; b.id="tag-"+TAGS.indexOf(t); b.textContent=tagL(t); b.setAttribute("aria-pressed", state.tag===t); b.onclick=()=>{state.tag = state.tag===t?null:t; renderFilters(); renderList();}; tr.appendChild(b); });
+}
+function renderList(){
+  const q = state.q.trim().toLowerCase();
+  const rows = ITEMS.filter(i => i.r===state.race
+    && (state.kind==="all" || i.k===state.kind)
+    && (!state.tag || i.tags.includes(state.tag))
+    && (!state.year || yearKey(i)===state.year)
+    && (!state.dist || distKey(i)===state.dist)
+    && (!state.lang || (state.lang==="ja" ? i.lg!=="en" : i.lg!=="ja"))
+    && (!q || [i.t,i.tEn||"",i.s,i.d,String(i.y||""),...i.tags,...i.tags.map(t=>TAG_EN[t])].join(" ").toLowerCase().includes(q)))
+    .sort((a,b)=>(b.y||0)-(a.y||0));
+  $("count").textContent = S().count(rows.length);
+  let lastYear;
+  $("list").innerHTML = rows.length ? rows.map(i => {
+    const yk = yearKey(i), head = yk!==lastYear ? `<li class="yearhead">${yk==="unknown"?S().yearUnknown:S().yr(yk)}</li>` : "";
+    lastYear = yk;
+    const url = UI==="en" && i.uEn ? i.uEn : i.u;
+    const title = UI==="en" && i.tEn ? i.tEn : i.t;
+    const src = UI==="en" ? (SRC_EN[i.s]||i.s) : i.s;
+    return head + `
+    <li class="item">
+      <span class="kind ${i.k}">${i.k==="video"?S().video:S().blog}</span>
+      <div class="body">
+        <a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>
+        <div class="meta">
+          <span class="lg ${i.lg}">${LG_LABEL[UI][i.lg]}</span>
+          <span class="yr">${i.y ? S().yr(i.y) : S().yearUnknown}</span>
+          ${i.d?`<span>${esc(distL(i.d))}</span>`:""}
+          ${i.tags.map(t=>`<span class="tag">${esc(tagL(t))}</span>`).join("")}
+          <span>${esc(src)}</span>
+        </div>
+      </div>
+    </li>`; }).join("") : `<li class="empty">${S().empty}</li>`;
+}
+function renderAll(){ renderChrome(); renderTabs(); renderRace(); renderFilters(); renderList(); }
+$("tabs").addEventListener("click", e => {
+  const b = e.target.closest("[data-race]"); if(!b) return;
+  state.race = b.dataset.race; state.tag = null; state.year = null; state.dist = null;
+  try{ localStorage.setItem("tn-race", state.race); }catch(err){}
+  renderAll();
+});
+document.querySelectorAll(".lsw").forEach(b => b.addEventListener("click", () => {
+  UI = b.dataset.lang; try{ localStorage.setItem("tn-ui", UI); }catch(err){}
+  renderAll();
+}));
+$("q").addEventListener("input", e => { state.q = e.target.value; renderList(); });
+renderAll();
+</script>
