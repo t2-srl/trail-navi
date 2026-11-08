@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="信越五岳・Mt.FUJI100（旧UTMF）・KAI70kの完走記、DNF記、ペーサー記、動画を大会ごとにまとめたページ。Race reports and videos for Japanese trail races.">
+<meta name="description" content="信越五岳・Mt.FUJI100（旧UTMF）・KAI70k・京都グレートラウンド・石舞台100の完走記、DNF記、ペーサー記、動画を大会ごとにまとめたページ。Race reports and videos for Japanese trail races.">
 <style>img{max-width:100%}[hidden]{display:none!important}body{margin:0}</style>
 <title>トレラン体験記ナビ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -155,6 +155,24 @@ const RACES = {
     specs:[["距離","約70km（年により69〜70km）"],["累積標高","約2,900〜3,500m（年により変動）"],["制限時間","21時間（2024年）"],["スタート","深夜0時（2024年）"]],
     callout:"「KAI」で検索するときは「UTMF KAI」「Mt.FUJI100 KAI」の両方で探すと、昔の記録も見つかります。",
     links:[["公式サイト","https://mtfuji100.com/"]]
+  },
+  kgr: {
+    tab:"京都グレートラウンド", tabSub:"KGR・12月",
+    name:"KYOTO GREAT ROUND（京都グレートラウンド／KGR）",
+    sub:"滋賀県大津市 なぎさ公園 発着（京都一周トレイル）／ 毎年12月末",
+    desc:"京都一周トレイルをもとに、東山・北山・西山の稜線をぐるりとつなぐ年末のロングトレイルレース。コースに目印を付けない「ノンマーキング」が基本で、公式GPXと地図アプリを頼りに自分で道を確かめながら進みます。2020年に始まり、2026年で7回目。寒さと夜間行動、道迷い対策がカギになる大会です。",
+    specs:[["200K（GT）","約206km・累積約11,000m・制限46時間"],["160K","約160km・累積約8,400m・制限31時間"],["130K","約130km・累積約6,100m・制限31時間（大会の原点となるクラシック種目）"],["80K","約80km・累積約4,100m・制限18時間（なぎさ公園→亀岡）"],["70K","約70km・累積約3,100m・制限18時間（亀岡→なぎさ公園、夜スタート）"],["30K／10K","約30km・制限6時間 ／ 約10km・制限4時間"]],
+    callout:"数字は2026年大会（12月28〜30日）の予定です。種目は年ごとに増えていて、昔の記録は130kmの部が中心です。正式名は「グレートラウンド」ですが、体験記では「グレイトラウンド」「KGR」と書かれていることも多いので、検索するときは両方で探してみてください。",
+    links:[["公式サイト","https://go-trail.net/pages/kgrtop"],["130Kの詳細","https://go-trail.net/pages/kgr130k"]]
+  },
+  ishibutai: {
+    tab:"石舞台100", tabSub:"奈良・1月",
+    name:"奈良 石舞台100 トレイルランニングレース",
+    sub:"奈良県明日香村 あすか風舞台 発着 ／ 毎年1月下旬",
+    desc:"石舞台古墳のそばを拠点に、明日香村周辺の山（音羽山・竜門岳など）を周回する真冬のトレイルレース。同じコースを何周するかで種目が分かれ、周回を重ねるほど夜と寒さとの戦いになります。年によっては雪や凍結もあり、チェーンスパイクが必要になったこともあります。2022年に始まり、2027年で6回目です。",
+    specs:[["120K","40km×3周・累積約7,800m・制限29時間（ノンマーキング・経験者向け）"],["100K","25km×4周・累積約4,000m・制限28時間30分"],["50K","25km×2周・累積約2,000m・制限12時間"],["25K","25km×1周・制限6時間"],["ファミリー","2.6km（3歳〜小学6年生）"]],
+    callout:"数字は2027年大会（1月30〜31日）の予定です。周回コースと種目は年ごとに大きく変わっています。2022〜2024年は1周約33km（133km・100km・66km・33kmなど）、2025〜2026年は1周約40km（120km・80km・40km、2026年は25kmも）、2027年は25kmの新しい周回が加わります。昔の記録を読むときは、何年のどの周回かに注意してください。",
+    links:[["公式サイト","https://go-trail.net/pages/ishibutaitop"]]
   }
 };
 
@@ -378,6 +396,103 @@ ITEMS.push(
   V("shinetsu","pt9ZgSuTAcs","【信越五岳110k2026＃3】永遠に続く林道。新たな不安",2026,"110km",["完走記・レポート"]),
   V("shinetsu","9nm_REbw8J8","2026信越五岳110km かなり端折って4分少しの動画",2026,"110km",["完走記・レポート"])
 );
+
+/* 2026-11-09 追加：京都グレートラウンド・石舞台100（note・YouTubeは各サイト内で直接検索。年は本文・説明欄で確認、分からないものは年不明） */
+ITEMS.push(
+  // 京都グレートラウンド — blogs
+  A("kgr","https://note.com/taguzo/n/nc3db5b16a482","京都グレートラウンド2026、試走会を終えて。コースの変更点と、GPXを直前に出したい理由",2026,"",["コース解説"],"note","ja"),
+  A("kgr","https://note.com/walkingmiyabi/n/n065ff59db9c4","KGR 京都グレイトラウンド 2025",2025,"130km",["DNF・リタイア"],"note","ja"),
+  A("kgr","https://yamap.com/activities/45209133/article","3年連続出走🏃💦【KYOTO GREAT ROUND 130K•2025】本戦奮闘記",2025,"130km",["完走記・レポート"],"YAMAP","ja"),
+  A("kgr","https://yamap.com/activities/45250979","KYOTO GREAT ROUND 2025 (130K)",2025,"130km",["完走記・レポート"],"YAMAP","ja"),
+  A("kgr","https://www.yamareco.com/modules/yamareco/detail-9108429.html","KYOTO GREAT ROUND 80K DNF",2025,"80km",["DNF・リタイア"],"ヤマレコ","ja"),
+  A("kgr","https://note.com/gaurium/n/n49eba41d5a92","KYOTO GREAT ROUND 2024 (130km)　前半",2024,"130km",["完走記・レポート"],"note","ja"),
+  A("kgr","https://note.com/gaurium/n/n88dabd764d24","KYOTO GREAT ROUND 2024 (130km)　後編",2024,"130km",["完走記・レポート"],"note","ja"),
+  A("kgr","https://note.com/gaurium/n/n35db793e0529","KYOTO GREAT ROUND 2024 装備編",2024,"130km",["装備・準備"],"note","ja"),
+  A("kgr","https://bobobrazilweb.com/kyotoround-finish-20241230/","KYOTO GREAT ROUND 2024 130km ロストしまくり下りの足が売り切れ満身創痍で完走",2024,"130km",["完走記・レポート"],"ボボ・ブラジル","ja"),
+  A("kgr","https://yamap.com/activities/36843079","京都グレートラウンド130 KGR 色々とグレートだぜ‼️",2024,"130km",["完走記・レポート"],"YAMAP","ja"),
+  A("kgr","https://note.com/gachio_running/n/nd5e1b4bb31c0","［レースレポート］真冬のトレイルランニング大会、京都一周130キロを走ります（Kyoto Great Round 2023）",2023,"130km",["完走記・レポート"],"note","ja"),
+  A("kgr","https://note.com/gachio_running/n/n3682f8f4a51b","［装備紹介］冬のトレランレースを走る時に身につける、持っていく必携品、寒さ対策で快適にランニング！",2023,"130km",["装備・準備"],"note","ja"),
+  A("kgr","https://note.com/haruka0014_/n/n682d47ff78e4","トレラン歴1年の女子大生が100マイルに挑戦した話",2023,"100mile",["完走記・レポート"],"note","ja"),
+  A("kgr","https://yamap.com/activities/28993728","KGR130【KYOTO GREAT ROUND•130KM】本戦奮闘記😅これで年越せます🙌",2023,"130km",["完走記・レポート"],"YAMAP","ja"),
+  A("kgr","https://note.com/gachio_running/n/ncfa1229ea6ec","［レースレポート］京都をグルリと一周走る冬のトレランレース130キロ（Kyoto Great Round - KGR）",2022,"130km",["完走記・レポート"],"note","ja"),
+  A("kgr","https://note.com/gachio_running/n/n3cddc3b183b9","真冬のトレランレースで使った装備とウェアリング！走った後の感想も語ります（Kyoto Great Round - KGR）",2022,"130km",["装備・準備"],"note","ja"),
+  A("kgr","https://note.com/taku4629/n/nfeabcf74a0f6","京都グレートラウンド",2022,"130km",["完走記・レポート"],"note","ja"),
+  A("kgr","https://yamap.com/activities/21676681","Kyoto Great Round 130",2022,"130km",["完走記・レポート"],"YAMAP","ja"),
+  A("kgr","https://yamazarukenji.net/2022/01/16/racereport-2-kyotogreatround2021/","【参戦レポート②：結果】「28時間32分」京都一周ぐるり旅（2021年12月29〜30日／KYOTO GREAT ROUND）",2021,"130km",["完走記・レポート"],"山猿日誌","ja"),
+  A("kgr","https://note.com/taguzo/n/n4010daaf1d83","KGR  KYOTO GREAT ROUND 完走ノート",2021,"",["コース解説"],"note","ja"),
+  A("kgr","https://note.com/fast_prawn6548/n/n154aa7470b17","KGR130Kが教えてくれた、メンタルの力と自分への自信",null,"130km",["完走記・レポート"],"note","ja"),
+  A("kgr","https://listen.style/p/runlab/ephmrkry","#76 今年の走り納めは極寒の京都をぐるり　KYOTO GREAT ROUND 130km完走",null,"130km",["完走記・レポート"],"LISTEN（ポッドキャスト）","ja"),
+  A("kgr","https://note.com/barlaws_original/n/nca7d6c20fc80","MYOGったザックで100mile.",null,"130km",["装備・準備"],"note","ja"),
+  // 京都グレートラウンド — videos
+  V("kgr","2ETsF2Q26gI","KYOTO GREAT ROUND 2025 LIVE DAY1",2025,"",["ライブ・大会映像"]),
+  V("kgr","neZumuX-rZM","KYOTO GREAT ROUND 2025 LIVE DAY2-1",2025,"",["ライブ・大会映像"]),
+  V("kgr","_9uSLND_oZU","Kyoto Great Round GT 200K 優勝への軌跡",2025,"200km",["完走記・レポート"]),
+  V("kgr","z6eqymwqq8Q","KGR史上初‼️2種目コンバインドで結局100マイル⁉️Kyoto Great Round 2025/12/29【レース】",2025,"",["完走記・レポート"]),
+  V("kgr","NRmd7opsjG4","2025年京都グレートラウンド",2025,"130km",["完走記・レポート"]),
+  V("kgr","N2WiPtzgIyw","【KGR2025】京都グレートラウンド130kmに挑む無謀な素人／KYOTO GREAT ROUND 130K",2025,"130km",["完走記・レポート"]),
+  V("kgr","2hLQt7gto4w","【装備&失敗談】真冬の初ロングトレイルは走る前から大ピンチ【KGR130K】",2025,"130km",["装備・準備"]),
+  V("kgr","3p2v_xsjELI","［レースレポート］真冬の京都一周トレイルを走るレースに挑んだよ（kyoto great round）",2025,"",["完走記・レポート"]),
+  V("kgr","CWxQTmsszSQ","［レースで使ってみた報告］トレランの冬装備！145キロを29時間進んだ時の使い勝手をご報告",2025,"",["装備・準備"]),
+  V("kgr","2s6zhe_Hq38","京都グレートラウンド２０２５（リベンジ編）",2025,"",["完走記・レポート"]),
+  V("kgr","iKWwJJqCg1Y","KYOTO GREAT ROUND 80k (KGR80K)",2025,"80km",["完走記・レポート"]),
+  V("kgr","SDDKibyibbc","【トレラン】年末の賑わう京都トレイル！自主練とKGRの応援📣",2025,"",["ペーサー・応援"]),
+  V("kgr","o0V011r6KY0","KGR2024 限界に挑む！KYOTO GREAT ROUND2024",2024,"",["ライブ・大会映像"]),
+  V("kgr","iXi4TUcAMz4","雪山に翻弄された200km❗️諦めない心と涙のインタビュー！Kyoto Great Round - Great Trip  2024/12/28【レース】",2024,"200km",["完走記・レポート"]),
+  V("kgr","WliGIwLvdVY","KYOTO GREAT ROUND130 初めての100km超のトレイルに挑戦！",2024,"130km",["完走記・レポート"]),
+  V("kgr","LHmts2KKxp4","2024 KYOTO GREAT ROUND ～ 京都をぐるっと一周130km　自己最長距離を完走できるか？！",2024,"130km",["完走記・レポート"]),
+  V("kgr","H1ISnOeJFRI","京都グレートラウンド２０２４",2024,"130km",["完走記・レポート"]),
+  V("kgr","IQ8OBEhsS88","［レースレポート］冬トレラン大会を走るなら京都グレイトラウンド！京都一周トレイルを進む80キロの部にエントリー！",2024,"80km",["完走記・レポート"]),
+  V("kgr","GTrao8q9Ulg","レースレポート 2024京都グレートラウンド(KGR80K)",2024,"80km",["完走記・レポート"]),
+  V("kgr","lHgWYGNlDQU","厳しいレースを走るモチベーションをあげる事が目的のトークイベント（京都グレイトラウンド2024）",2024,"",["スナップ・特集"]),
+  V("kgr","4r4mOpyWjw8","第一回京都グレートラウンドへの道",2024,"130km",["コース解説"]),
+  V("kgr","925ja3xavQA","京都グレートラウンド試走（山幸橋～亀岡駅）",2024,"",["コース解説"]),
+  V("kgr","ikVoTNG78KM","京都グレートラウンド試走（亀岡駅～大津駅）",2024,"",["コース解説"]),
+  V("kgr","-uKm5yUKsek","［レースレポート］真冬のトレイルランニング大会、京都一周130キロを走ります（Kyoto Great Round 2023）",2023,"130km",["完走記・レポート"]),
+  V("kgr","y_1tXcambk4","［装備紹介］冬のトレランレースを走る時に身につける、持っていく必携品、寒さ対策で快適にランニング！",2023,"",["装備・準備"]),
+  V("kgr","LFgX6cVzGCc","［レースレポート］京都をグルリと一周走る冬のトレランレース130キロ（Kyoto Great Round - KGR）",2022,"130km",["完走記・レポート"]),
+  V("kgr","vwm4pOUXjac","【レース総括】2021も開催　KYOTO GREAT ROUND 表彰式",2020,"",["ニュース・結果"]),
+  V("kgr","jl35vRqAKkc","KYOTO GREAT ROUND 重要なこと説明します",2020,"",["コース解説"]),
+  V("kgr","hGyweeNxaiw","kyoto great round 130コース　コース/GPS/マーキング/レスキュー説明",2020,"130km",["コース解説"]),
+
+  // 石舞台100 — blogs
+  A("ishibutai","https://note.com/huge_drm7777/n/nf010eb0b617d","参戦記　石舞台100 120km",2026,"120km",["完走記・レポート"],"note","ja"),
+  A("ishibutai","https://note.com/dx_east/n/n7d01a9800b07","石舞台100（80kmの部）出場記録",2026,"80km",["DNF・リタイア"],"note","ja"),
+  A("ishibutai","https://note.com/huge_drm7777/n/ned24ba52cb30","石舞台100対策1/10 寒さと累積標高に耐えるための「現実的ギア再考」",2026,"120km",["装備・準備"],"note","ja"),
+  A("ishibutai","https://note.com/bun_pei/n/n5d5345ed3848","トレイルランニングに挑戦【石舞台100】",2026,"120km",["装備・準備"],"note","ja"),
+  A("ishibutai","https://yamap.com/activities/45470797/article","石舞台2026☃️試走会💦天気良すぎ🙌やっぱりポールは不要だった😂",2026,"",["コース解説"],"YAMAP","ja"),
+  A("ishibutai","https://yamap.com/activities/37479367/article","2025 石舞台100 （120kmの部）",2025,"120km",["完走記・レポート"],"YAMAP","ja"),
+  A("ishibutai","https://co-tecnica.com/ishibutai-3","トレラン奈良 石舞台100で初の40km走破。誰とも比べない、己への挑戦③",2025,"40km",["完走記・レポート"],"コンサルティングテクニカ","ja"),
+  A("ishibutai","https://www.hayabusa-sports.com/2025/02/20/698/","石舞台100　2025年から始まった新コース走ってきました！",2025,"",["完走記・レポート"],"HAYABUSA SPORTS","ja"),
+  A("ishibutai","https://note.com/nunuu/n/nb04e251c48a4","石舞台100　トレイルランニングレースを走ってきた話",2025,"",["完走記・レポート"],"note","ja"),
+  A("ishibutai","https://note.com/taguzo/n/n1d7a1839d817","【2025年石舞台100】大幅リニューアル！新コースと変更点",2025,"",["ニュース・結果","コース解説"],"note","ja"),
+  A("ishibutai","https://note.com/naginagi48/n/n03bc5e3db6b9","石舞台100",2024,"66km",["完走記・レポート"],"note","ja"),
+  A("ishibutai","https://sotoaso.jp/archives/7180","【レース参戦記】石舞台100",2024,"",["完走記・レポート"],"ソトアソ","ja"),
+  A("ishibutai","https://tetsu-runtrail.com/ishibutai100-2023/","【大会報告】石舞台100〜極寒のスノートレイル〜",2023,"",["完走記・レポート"],"てつラン＆トレイル","ja"),
+  A("ishibutai","https://note.com/universal_field/n/ne2b5f5d70b70","石舞台とは・・・？",2023,"",["完走記・レポート"],"note","ja"),
+  A("ishibutai","https://ameblo.jp/powersports/entry-12715774195.html","【試走レポート】奈良石舞台100トレイルコース完走のためには？",2022,"",["コース解説"],"アメブロ","ja"),
+  A("ishibutai","https://note.com/taguzo/n/n8b841e936b13","石舞台１００タイムチャート",2022,"",["コース解説"],"note","ja"),
+  A("ishibutai","https://listen.style/p/ibuki/ccdk13rj","石舞台100終了！ついにあのカテゴリーに完走者登場！トップ選手インタビュー！",null,"",["ニュース・結果"],"LISTEN（ポッドキャスト）","ja"),
+  // 石舞台100 — videos
+  V("ishibutai","TBZt-SKr5jQ","激闘の幕開け！石舞台100トレイルランニングレース2026 DAY1",2026,"",["ライブ・大会映像"]),
+  V("ishibutai","edD97VPsNZU","感動のフィナーレ！石舞台100トレイルランニングレース DAY2 最終ゴール＆表彰式生中継",2026,"",["ライブ・大会映像"]),
+  V("ishibutai","pGHh5_GDpls","[石舞台100トレイル80キロ挑戦]ゆき　よろずや",2026,"80km",["完走記・レポート"]),
+  V("ishibutai","yN2GmgnwH-E","【石舞台2026】極寒1月末のトレイルランニングレース",2026,"",["完走記・レポート"]),
+  V("ishibutai","juG696jn5_c","'25 奈良石舞台100 120キロ〜リハビリラン成功〜",2025,"120km",["完走記・レポート"]),
+  V("ishibutai","38xwkv5oHiM","石舞台100 80kmの部　トレイル太郎の挑戦　はたして80km最後まで完走できたのか？必携装備品や当日の様子、着用している服装なども紹介しています！",2025,"80km",["完走記・レポート"]),
+  V("ishibutai","0rlNsA7HUwY","今回もこの方に勝てませんでした…（2025石舞台100トレイルランニングレース）",2025,"80km",["完走記・レポート"]),
+  V("ishibutai","AvDCTR4BM4g","奈良石舞台100 2025 レースレビュー　すれ違った選手みんな映します！",2025,"",["完走記・レポート"]),
+  V("ishibutai","sKgWGjBjriY","[2025 石舞台100]レースで使った装備品や必携品を紹介します！",2025,"80km",["装備・準備"]),
+  V("ishibutai","OgUXHpXTk98","奈良 石舞台100 　2025年コース試走",2025,"",["コース解説"]),
+  V("ishibutai","c8HSCAvc9wc","【石舞台100】優勝（あまりの寒さでトラブル起きる）",2024,"66km",["完走記・レポート"]),
+  V("ishibutai","tko8Qfft4ZA","[石舞台100  70キロの部参加]車中泊　ゆきよろずや",2024,"66km",["完走記・レポート"]),
+  V("ishibutai","R8FxNd2T51Y","2024石舞台100予習⁉️【過酷】雪山となり、夜は体感−15度。チェーンスパイクでのトレランは楽しい⁉︎",2024,"",["コース解説"]),
+  V("ishibutai","tZVdNA1zPn4","[石舞台100試走会参加]還暦挑戦　ゆきよろずや",2024,"",["コース解説"]),
+  V("ishibutai","_z8uOc-q-og","石舞台100　#石舞台100　#真冬のウルトラトレイル　#トレランレース",2023,"",["完走記・レポート"]),
+  V("ishibutai","lO_ev3T8XOg","【トレラン】石舞台100 100km初挑戦！2022",2022,"100km",["完走記・レポート"]),
+  V("ishibutai","Y77CX_xBxQI","優勝獲得！真夜中のトレランレース　石舞台100　33㎞　#石舞台100　#トレランレース　#優勝　#石舞台",2022,"33km",["完走記・レポート"]),
+  V("ishibutai","fFCr8_ZWR-s","奈良石舞台古墳100 33kmの部",2022,"33km",["完走記・レポート"]),
+  V("ishibutai","vovDxb_ykqY","#34 【石舞台100】走ってみたよ🥰",null,"",["コース解説"])
+);
 ITEMS.forEach(i => { if(!i.lg) i.lg = "ja"; });
 { const k = ITEMS.find(i=>i.u.endsWith("ih4VGKiB6eU")); if(k){ k.lg="en"; k.t="Mt. Fuji100 | KAI70 2026 My First 70K Trail Race in Japan (Brutal Night Run)"; } }
 
@@ -407,27 +522,44 @@ Object.assign(RACES.kai, {en:{
   callout:"When searching, try both \"UTMF KAI\" and \"Mt.FUJI100 KAI\" to find older reports.",
   links:[["Official site (EN)","https://en.mtfuji100.com/"]]}});
 
+Object.assign(RACES.kgr, {en:{
+  tab:"Kyoto Great Round", tabSub:"KGR · Dec",
+  name:"KYOTO GREAT ROUND (KGR)",
+  sub:"Start/finish: Nagisa Park, Otsu, Shiga (Kyoto Isshu Trail) / late December",
+  desc:"A year-end long-trail race that loops the ridges of Higashiyama, Kitayama and Nishiyama around Kyoto, based on the Kyoto Isshu Trail. The course is unmarked: you navigate yourself with the official GPX and a map app. First held in 2020; 2026 is the 7th edition. Cold, night running and navigation are the keys.",
+  specs:[["200K (GT)","approx. 206 km · approx. 11,000 m D+ · 46 h limit"],["160K","approx. 160 km · approx. 8,400 m D+ · 31 h limit"],["130K","approx. 130 km · approx. 6,100 m D+ · 31 h limit (the original classic)"],["80K","approx. 80 km · approx. 4,100 m D+ · 18 h limit (Nagisa Park → Kameoka)"],["70K","approx. 70 km · approx. 3,100 m D+ · 18 h limit (Kameoka → Nagisa Park, night start)"],["30K / 10K","approx. 30 km · 6 h limit / approx. 10 km · 4 h limit"]],
+  callout:"Figures are for the 2026 edition (Dec 28–30). Categories have grown over the years, so older reports are mostly from the 130 km race. Japanese runners write the name both as グレートラウンド and グレイトラウンド, or just \"KGR\".",
+  links:[["Official site (EN)","https://go-trail.net/en/pages/kgr70k"],["Official site (JA)","https://go-trail.net/pages/kgrtop"]]}});
+Object.assign(RACES.ishibutai, {en:{
+  tab:"Ishibutai 100", tabSub:"Nara · Jan",
+  name:"Nara Ishibutai 100 Trail Running Race",
+  sub:"Start/finish: Asuka Kazebutai, Asuka Village, Nara / late January",
+  desc:"A midwinter loop race in the hills around Asuka Village (Mt. Otowa, Mt. Ryumon and more), based next to the Ishibutai Kofun burial mound. Categories are set by how many laps you run, and the more laps, the more night and cold you face. Some years brought snow and ice, with chain spikes required. First held in 2022; 2027 is the 6th edition.",
+  specs:[["120K","40 km × 3 laps · approx. 7,800 m D+ · 29 h limit (unmarked, experienced runners)"],["100K","25 km × 4 laps · approx. 4,000 m D+ · 28 h 30 min limit"],["50K","25 km × 2 laps · approx. 2,000 m D+ · 12 h limit"],["25K","25 km × 1 lap · 6 h limit"],["Family","2.6 km (age 3 to 6th grade)"]],
+  callout:"Figures are for the 2027 edition (Jan 30–31). The loop and categories change a lot: about 33 km per lap in 2022–2024 (133/100/66/33 km), about 40 km in 2025–2026 (120/80/40 km, plus 25 km in 2026), and a new 25 km loop from 2027. Check the year when reading older reports.",
+  links:[["Official site","https://go-trail.net/pages/ishibutaitop"]]}});
+
 const TAGS = ["完走記・レポート","DNF・リタイア","ペーサー・応援","装備・準備","コース解説","ライブ・大会映像","ニュース・結果","スナップ・特集"];
 const TAG_EN = {"完走記・レポート":"Race report","DNF・リタイア":"DNF","ペーサー・応援":"Pacer / crew","装備・準備":"Gear & prep","コース解説":"Course guide","ライブ・大会映像":"Live / official video","ニュース・結果":"News & results","スナップ・特集":"Features"};
 const DIST_EN = {"UTMF時代":"UTMF era"};
-const SRC_EN = {"アメブロ":"Ameba Blog","はてなブログ":"Hatena Blog","Mt.FUJI100 公式":"Mt.FUJI100 official"};
+const SRC_EN = {"アメブロ":"Ameba Blog","はてなブログ":"Hatena Blog","Mt.FUJI100 公式":"Mt.FUJI100 official","ヤマレコ":"Yamareco","LISTEN（ポッドキャスト）":"LISTEN (podcast)","ソトアソ":"Sotoaso","てつラン＆トレイル":"Tetsu Run & Trail","山猿日誌":"Yamazaru Nisshi","ボボ・ブラジル":"Bobo Brazil","コンサルティングテクニカ":"Consulting Tecnica"};
 const LG_LABEL = {ja:{ja:"日本語",en:"英語",both:"日英"}, en:{ja:"Japanese",en:"English",both:"JA / EN"}};
 const STR = {
   ja:{eyebrow:"TRAIL RACE LOGBOOK · 試作版", h1:'エントリー前に読む<span class="tape">体験記</span>',
     lead:"大会ごとに、先輩ランナーの完走記・リタイア記・ペーサー記・動画をまとめました。エントリーを迷っているときや、コースの雰囲気をつかみたいときにどうぞ。",
-    notice:"<b>試作版です。</b>2026年10月5日〜11月6日にt2.srlが集めたリンクです（2026年の体験記はnote内・YouTube内を直接検索して追加）。タイトルは投稿時の表記のまま載せていて、各記事・動画の中身までは一件ずつ確認していません。大会データは年によって変わるので、最新の情報は必ず公式サイトで確かめてください。",
+    notice:"<b>試作版です。</b>2026年10月5日〜11月9日にt2.srlが集めたリンクです（2026年の体験記はnote内・YouTube内を直接検索して追加）。タイトルは投稿時の表記のまま載せていて、各記事・動画の中身までは一件ずつ確認していません。大会データは年によって変わるので、最新の情報は必ず公式サイトで確かめてください。",
     q:"キーワードで絞り込み（例：DNF、装備、2025）", year:"年", dist:"種目", kind:"種類", lang:"言語", tag:"内容", all:"すべて",
     blog:"ブログ", video:"動画", yearUnknown:"年不明", distUnknown:"種目不明", yr:y=>y+"年", count:n=>n+"件",
     empty:"条件に合う記事がありません。絞り込みを外してみてください。", tip:"",
-    footer:"<div>リンク先の記事・動画の権利は、それぞれの作者にあります。このページは紹介とリンクだけを載せています。</div><div>作成：t2.srl／ 最終更新 2026-11-06</div>"},
+    footer:"<div>リンク先の記事・動画の権利は、それぞれの作者にあります。このページは紹介とリンクだけを載せています。</div><div>作成：t2.srl／ 最終更新 2026-11-09</div>"},
   en:{eyebrow:"TRAIL RACE LOGBOOK · PROTOTYPE", h1:'Read the <span class="tape">race stories</span> before you enter',
     lead:"Finish reports, DNF stories, pacer diaries and videos from runners who went before you — collected race by race. Use it when you're deciding whether to enter a Japanese trail race, or want a feel for the course.",
-    notice:"<b>Prototype.</b> Links collected 5 Oct – 6 Nov 2026. Titles are shown as their authors wrote them, and we haven't reviewed every article or video. Race figures change year to year — always confirm on the official site.",
+    notice:"<b>Prototype.</b> Links collected 5 Oct – 9 Nov 2026. Titles are shown as their authors wrote them, and we haven't reviewed every article or video. Race figures change year to year — always confirm on the official site.",
     q:"Filter by keyword (e.g. DNF, gear, 2025)", year:"Year", dist:"Race", kind:"Type", lang:"Language", tag:"Topic", all:"All",
     blog:"Blog", video:"Video", yearUnknown:"Year unknown", distUnknown:"Unspecified", yr:y=>String(y), count:n=>n+(n===1?" link":" links"),
     empty:"Nothing matches these filters. Try clearing one.",
     tip:"Most stories are in Japanese. Your browser's translate feature works on most blog posts, and YouTube can auto-translate captions.",
-    footer:"<div>All articles and videos belong to their creators. This page only introduces and links to them.</div><div>Curated by t2.srl · Updated 2026-11-06</div>"}
+    footer:"<div>All articles and videos belong to their creators. This page only introduces and links to them.</div><div>Curated by t2.srl · Updated 2026-11-09</div>"}
 };
 
 let state = {race:"shinetsu", kind:"all", tag:null, year:null, dist:null, lang:null, q:""};
@@ -478,7 +610,7 @@ function renderFilters(){
   const inRace = ITEMS.filter(i=>i.r===state.race);
   const years = [...new Set(inRace.map(yearKey))].sort((a,b)=> a==="unknown"?1 : b==="unknown"?-1 : b-a);
   chipRow("yearRow","year-", years.map(y=>[y, y==="unknown"?S().yearUnknown:y]), state.year, v=>state.year=v);
-  const dists = [...new Set(inRace.map(distKey))].sort((a,b)=> a==="unknown"?1 : b==="unknown"?-1 : a.localeCompare(b));
+  const dists = [...new Set(inRace.map(distKey))].sort((a,b)=> a==="unknown"?1 : b==="unknown"?-1 : a.localeCompare(b,"ja",{numeric:true}));
   $("distRow").hidden = dists.length < 2;
   chipRow("distRow","dist-", dists.map(d=>[d, distL(d)]), state.dist, v=>state.dist=v);
   chipRow("kindRow","kind-", [["blog",S().blog],["video",S().video]], state.kind==="all"?null:state.kind, v=>state.kind=v||"all");
