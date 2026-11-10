@@ -504,6 +504,7 @@ ITEMS.push(
   V("ishibutai","fFCr8_ZWR-s","奈良石舞台古墳100 33kmの部",2022,"33km",["完走記・レポート"]),
   V("ishibutai","vovDxb_ykqY","#34 【石舞台100】走ってみたよ🥰",null,"",["コース解説"])
 );
+/* 2026-11-10 追加：YouTube「100マイル喫茶店komorebi」の動画11本（石舞台100・Mt.FUJI100・KGR試走）を各大会の一覧に追記 */
 ITEMS.forEach(i => { if(!i.lg) i.lg = "ja"; });
 { const k = ITEMS.find(i=>i.u.endsWith("ih4VGKiB6eU")); if(k){ k.lg="en"; k.t="Mt. Fuji100 | KAI70 2026 My First 70K Trail Race in Japan (Brutal Night Run)"; } }
 
@@ -558,19 +559,19 @@ const LG_LABEL = {ja:{ja:"日本語",en:"英語",both:"日英"}, en:{ja:"Japanes
 const STR = {
   ja:{eyebrow:"TRAIL RACE LOGBOOK · 試作版", h1:'エントリー前に読む<span class="tape">体験記</span>',
     lead:"大会ごとに、先輩ランナーの完走記・リタイア記・ペーサー記・動画をまとめました。エントリーを迷っているときや、コースの雰囲気をつかみたいときにどうぞ。",
-    notice:"<b>試作版です。</b>2026年10月5日〜11月9日にt2.srlが集めたリンクです（2026年の体験記はnote内・YouTube内を直接検索して追加）。タイトルは投稿時の表記のまま載せていて、各記事・動画の中身までは一件ずつ確認していません。大会データは年によって変わるので、最新の情報は必ず公式サイトで確かめてください。",
+    notice:"<b>試作版です。</b>2026年10月5日〜11月10日にt2.srlが集めたリンクです（2026年の体験記はnote内・YouTube内を直接検索して追加）。タイトルは投稿時の表記のまま載せていて、各記事・動画の中身までは一件ずつ確認していません。大会データは年によって変わるので、最新の情報は必ず公式サイトで確かめてください。",
     q:"キーワードで絞り込み（例：DNF、装備、2025）", year:"年", dist:"種目", kind:"種類", lang:"言語", tag:"内容", all:"すべて",
     blog:"ブログ", video:"動画", yearUnknown:"年不明", distUnknown:"種目不明", yr:y=>y+"年", count:n=>n+"件",
     empty:"条件に合う記事がありません。絞り込みを外してみてください。", tip:"",
-    footer:"<div>リンク先の記事・動画の権利は、それぞれの作者にあります。このページは紹介とリンクだけを載せています。</div><div>作成：t2.srl／ 最終更新 2026-11-09</div>"},
+    footer:"<div>リンク先の記事・動画の権利は、それぞれの作者にあります。このページは紹介とリンクだけを載せています。</div><div>作成：t2.srl／ 最終更新 2026-11-10</div>"},
   en:{eyebrow:"TRAIL RACE LOGBOOK · PROTOTYPE", h1:'Read the <span class="tape">race stories</span> before you enter',
     lead:"Finish reports, DNF stories, pacer diaries and videos from runners who went before you — collected race by race. Use it when you're deciding whether to enter a Japanese trail race, or want a feel for the course.",
-    notice:"<b>Prototype.</b> Links collected 5 Oct – 9 Nov 2026. Titles are shown as their authors wrote them, and we haven't reviewed every article or video. Race figures change year to year — always confirm on the official site.",
+    notice:"<b>Prototype.</b> Links collected 5 Oct – 10 Nov 2026. Titles are shown as their authors wrote them, and we haven't reviewed every article or video. Race figures change year to year — always confirm on the official site.",
     q:"Filter by keyword (e.g. DNF, gear, 2025)", year:"Year", dist:"Race", kind:"Type", lang:"Language", tag:"Topic", all:"All",
     blog:"Blog", video:"Video", yearUnknown:"Year unknown", distUnknown:"Unspecified", yr:y=>String(y), count:n=>n+(n===1?" link":" links"),
     empty:"Nothing matches these filters. Try clearing one.",
     tip:"Most stories are in Japanese. Your browser's translate feature works on most blog posts, and YouTube can auto-translate captions.",
-    footer:"<div>All articles and videos belong to their creators. This page only introduces and links to them.</div><div>Curated by t2.srl · Updated 2026-11-09</div>"}
+    footer:"<div>All articles and videos belong to their creators. This page only introduces and links to them.</div><div>Curated by t2.srl · Updated 2026-11-10</div>"}
 };
 
 let state = {race:"shinetsu", kind:"all", tag:null, year:null, dist:null, lang:null, q:""};
