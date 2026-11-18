@@ -505,6 +505,17 @@ ITEMS.push(
   V("ishibutai","vovDxb_ykqY","#34 【石舞台100】走ってみたよ🥰",null,"",["コース解説"])
 );
 /* 2026-11-10 追加：YouTube「100マイル喫茶店komorebi」の動画11本（石舞台100・Mt.FUJI100・KGR試走）を各大会の一覧に追記 */
+/* 2026-11-18 追加：新着動画8本（信越五岳2026 ×6、KGR2026試走 ×1、Mt.FUJI100 2027大会概要 ×1） */
+ITEMS.push(
+  V("shinetsu","Y8afNwarHNU","【信越五岳110k2026#2】あの日、肩を折った場所へ。再び。悪夢の斑尾山越え",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","ZUVaYfLgh7g","【信越五岳110k2026＃4】吊り橋でまさかの大渋滞！笹ヶ峰関門に間に合うのか？",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","btIHkwROKTs","【信越五岳110k2026＃5】両手両足に異変…忍び寄る身体の限界",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","U2BzrwIlpRg","【信越五岳110k2026#6】立ちはだかる最後の難関",2026,"110km",["完走記・レポート"]),
+  V("shinetsu","J53_jWQStIo","【信越五岳110k直前】衝撃のレイン！雨対策は大丈夫か？レース直前の最終装備チェック",2026,"110km",["装備・準備"]),
+  V("shinetsu","jasUIWrlRmE","信越五岳トレイルランニングレース 2026",2026,"",["完走記・レポート"]),
+  V("kgr","95uS7ciGIPg","KGR70K試走｜ポンポン山〜音羽山へ、京都をぐるっと走ってきた。",2026,"70km",["コース解説"]),
+  V("fuji","pFO-f8zEw-Y","Mt.FUJI100 2027 大会概要発表 LIVE（日本語放送）",2027,"",["ライブ・大会映像"])
+);
 ITEMS.forEach(i => { if(!i.lg) i.lg = "ja"; });
 { const k = ITEMS.find(i=>i.u.endsWith("ih4VGKiB6eU")); if(k){ k.lg="en"; k.t="Mt. Fuji100 | KAI70 2026 My First 70K Trail Race in Japan (Brutal Night Run)"; } }
 
@@ -563,7 +574,7 @@ const STR = {
     q:"キーワードで絞り込み（例：DNF、装備、2025）", year:"年", dist:"種目", kind:"種類", lang:"言語", tag:"内容", all:"すべて",
     blog:"ブログ", video:"動画", yearUnknown:"年不明", distUnknown:"種目不明", yr:y=>y+"年", count:n=>n+"件",
     empty:"条件に合う記事がありません。絞り込みを外してみてください。", tip:"",
-    footer:"<div>リンク先の記事・動画の権利は、それぞれの作者にあります。このページは紹介とリンクだけを載せています。</div><div>作成：t2.srl／ 最終更新 2026-11-10</div>"},
+    footer:"<div>リンク先の記事・動画の権利は、それぞれの作者にあります。このページは紹介とリンクだけを載せています。</div><div>作成：t2.srl／ 最終更新 2026-11-18</div>"},
   en:{eyebrow:"TRAIL RACE LOGBOOK · PROTOTYPE", h1:'Read the <span class="tape">race stories</span> before you enter',
     lead:"Finish reports, DNF stories, pacer diaries and videos from runners who went before you — collected race by race. Use it when you're deciding whether to enter a Japanese trail race, or want a feel for the course.",
     notice:"<b>Prototype.</b> Links collected 5 Oct – 10 Nov 2026. Titles are shown as their authors wrote them, and we haven't reviewed every article or video. Race figures change year to year — always confirm on the official site.",
@@ -571,7 +582,7 @@ const STR = {
     blog:"Blog", video:"Video", yearUnknown:"Year unknown", distUnknown:"Unspecified", yr:y=>String(y), count:n=>n+(n===1?" link":" links"),
     empty:"Nothing matches these filters. Try clearing one.",
     tip:"Most stories are in Japanese. Your browser's translate feature works on most blog posts, and YouTube can auto-translate captions.",
-    footer:"<div>All articles and videos belong to their creators. This page only introduces and links to them.</div><div>Curated by t2.srl · Updated 2026-11-10</div>"}
+    footer:"<div>All articles and videos belong to their creators. This page only introduces and links to them.</div><div>Curated by t2.srl · Updated 2026-11-18</div>"}
 };
 
 let state = {race:"shinetsu", kind:"all", tag:null, year:null, dist:null, lang:null, q:""};
