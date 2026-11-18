@@ -38,6 +38,7 @@ header{padding-block:32px 20px;display:grid;gap:6px}
 .lsw[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .lg{font-size:11px;font-weight:700;border-radius:4px;padding:0 6px;background:var(--line);color:var(--ink)}
 .lg.en,.lg.both{background:var(--moss);color:var(--bg)}
+.lg.zh,.lg.ko{background:var(--moss);color:var(--bg)}
 .tip{font-size:13px;color:var(--muted);margin:0 0 8px}
 .eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--muted)}
 h1{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance}
@@ -516,6 +517,90 @@ ITEMS.push(
   V("kgr","95uS7ciGIPg","KGR70K試走｜ポンポン山〜音羽山へ、京都をぐるっと走ってきた。",2026,"70km",["コース解説"]),
   V("fuji","pFO-f8zEw-Y","Mt.FUJI100 2027 大会概要発表 LIVE（日本語放送）",2027,"",["ライブ・大会映像"])
 );
+/* 2026-11-18 追加②：以前からの掲載漏れ＋海外ランナーの動画（81本）。年は大会の開催年（投稿日から判断、不明はnull） */
+ITEMS.push(
+  V("shinetsu","XhD6GEglOto","2010 信越五岳110km ハイライト",2010,"110km",["ライブ・大会映像"]),
+  V("shinetsu","gvPT9XaKp-U","信越五岳トレイル整備2020（高画質）",2020,"",["コース解説"]),
+  V("shinetsu","LLD3Qxw3Lzc","信越五岳トレイルレース110k 2025＃1　負けに不思議の負けなし",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","CqaNLNuwRHI","大雨のスタート　波乱の幕開け　信越五岳トレイルランニングレース110km2025＃2",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","Q5cqBG7sl5Q","泥だらけのトレイル　体勢を崩した次の瞬間　一体何が起きた？　信越五岳110km#3 2025",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","tvJSRJMh7rA","左肩負傷でもレース続行　泥だらけのトレイル　どこまで行ける？　信越五岳110km2025＃4",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","eeEdTbRPL88","第１関門黒姫の奇跡！左肩が上がった！？　信越五岳110km2025＃5",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","GJ0cBRGd-l4","笹ヶ峰関門ファイト　残り時間あと15分　制限時間内にいける？　　信越五岳110km2025＃6",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","PZU7r7eTZ2Y","結末は？　笹ヶ峰第2関門ファイト　　信越五岳110km2025#7",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","0BTZ1dqoRMA","レース後のお楽しみ温泉サウナと絶品そば　そしてレースの代償は？　信越五岳110km2025＃8",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","aiJAwkuI8a0","【最終回】左肩骨折手術　しばしのお別れ　信越五岳110km2025＃9",2025,"110km",["完走記・レポート"]),
+  V("shinetsu","0j6u6lm0sBk","【信越五岳110k】本気のリベンジへ決戦の極厚シューズ投入×竜泉寺の湯×八王子ラーメン【ラン×サウナ×メシ】",2026,"110km",["装備・準備"]),
+  V("shinetsu","aUO2CPxyqpk","【信越五岳トレイル2025】土砂降り、痛み、メンタル崩壊！",2025,"",["完走記・レポート"]),
+  V("shinetsu","VQ7DmCpjKFY","【信越五岳トレイルランニングレース2025】昨年のリベンジ！110km完走なるか？！",2025,"110km",["完走記・レポート"]),
+  VL("shinetsu","dcsaikpJCdE","【Japan race】#9 SINETSU FIVE MOUNTAINS TRAIL  110km  (信越五岳 110km)  #trailrunning   #gifu  #japan",2024,"110km",["完走記・レポート"],"both"),
+  V("shinetsu","0asXnEm2Vt8","【信越五岳トレイルランニングレース】装備紹介｜経験者スタッフがリアルにアドバイス！",2026,"",["装備・準備"]),
+  V("fuji","_f-54tWo8mc","Mt.FUJI 100 2024 Race Digest",2025,"",["ライブ・大会映像"]),
+  V("fuji","ZTXCDsCuqnY","【2024 Mt.FUJI100/レース前編】リアルドキュメンタリー人生初・日本最高峰トレラン100マイルレース初挑戦！！/START〜97キロまでの軌跡！！/初100マイル結果はいかに？！",2024,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","8bKGsGuvjU4","［レースレポート］トレランの祭典 Mt.Fuji100に参加！走り出したもののトラブルでリタイヤになるm(_ _)m",2026,"",["DNF・リタイア"]),
+  V("fuji","3PiTSiYtOUo","『Mt.FUJI100mi 2025』11年かかって憧れのゴールゲイトへゴール！60代で初マイラーとなりました。【レースレポート】",2025,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","UMcmgzfeZ6g","2026 Mt.FUJI 100",2026,"",["完走記・レポート"]),
+  V("fuji","Tb8zeiA3Rps","Mt.FUJI100　初めての100マイルレースに挑戦！",2025,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","RjG5oEsgLwg","【Mt.FUJI 100】初100マイルレースで27.5時間切り、2桁順位に挑戦してきました【レース動画】2025.4.25-26",2025,"FUJI100mi",["完走記・レポート"]),
+  VL("fuji","0e4vBorFzYw","【Mt.FUJI100】 2026 富士山極限越野跑100英里組 【完全版】",2026,"FUJI100mi",["完走記・レポート"],"zh"),
+  V("fuji","JUFEtiXR8vs","【Mt.FUJI100】2年間の集大成！100マイラーになる夢へ挑戦！とにかく楽しくやりきった最高の旅✨️",2024,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","GUU-O6M4iwI","【Mt.FUJI100 2025】2026年挑戦する人へ。WEST藤本の完走までの記録 トレラン女子100マイルへの道",2025,"FUJI100mi",["完走記・レポート"]),
+  VL("fuji","IJy-UZuiW1k","2026 후지백마일대회 Mt.Fuji100 | 166km 7416m+ sub30  도전",2026,"FUJI100mi",["完走記・レポート"],"ko"),
+  VL("fuji","wyAjqNnzHUc","Utra-Trail Mt. Fuji 100 miles 2025 | 166km 7206m+ 4K",2025,"FUJI100mi",["完走記・レポート"],"en"),
+  VL("fuji","AMlga1QE908","Mont Fuji 100 Ultra Trail 2025 - 170km 7300m d+/-",2025,"FUJI100mi",["完走記・レポート"],"en"),
+  V("fuji","ZTdBqynIUBs","初めての100マイルレースに挑戦【Mt.FUJI100】",2025,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","YkDEQv3ExJ4","[ドキュメント44時間] 日本最大のトレイルランニングレース「Mt.FUJI 100」。3000名を超えるランナーと共に大勢のスタッフが参加する。裏方視点から見たMt.FUJI 100、スイーパー編。",2025,"",["ペーサー・応援"]),
+  V("fuji","DtMSkqZQtXw","Mt.FUJI 100 - 美しさと苦しさのトレイル165km",2026,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","4_m9kk_fA4I","Mt.FUJI100【天子山地で全力応援】",2024,"",["ペーサー・応援"]),
+  V("fuji","GUpdFgenZmQ","【2024Mt.FUJI 100】富士山の周りを走る日本最大級のトレラン大会に出てきたよ【34時間半ゴール】",2024,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","zr7cgRqOPME","【Mt.FUJI100】スタートまでの過ごし方。2年間の努力の集大成へ、、。100マイラーへの挑戦！",2024,"FUJI100mi",["装備・準備"]),
+  V("fuji","l0xPDAcsCCU","Mt.FUJI 100 2026",2026,"",["完走記・レポート"]),
+  V("fuji","O6Fafd3lgJg","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅① 〜レース前日受付から当日のスタート〜人生初の100マイルレース",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","vJmp2URhwOU","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅② 〜スタート・富士山こどもの国からF1富士宮まで〜　人生初の100マイルレース",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","rZnNx2HJzqs","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅③ 〜F1富士宮〜F２麓〜　真夜中の天子ヶ岳越え",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","zHHRqiIcNIM","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅⑤　睡魔との闘い　前半戦ゴールへ　F4富士河口湖町精進湖〜F5富士急ハイランド〜F6忍野",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","FPye0NX1Kfc","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅⑥ 足首の痛み・睡魔との闘い　F6忍野〜F７山中湖きららまで",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","gelJFiC3I1A","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅⑦ 3日目の夜　極限状態の幻覚幻聴　F７山中湖きらら〜F８二十曲峠まで",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","oLmuoH0Zt38","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅⑧ コース最高峰の杓子山越え　迫る制限時間　途中棄権 最大の危機　F8二十曲峠〜F9富士吉田",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","G_-sb-zPQ7M","【ウルトラトレイルマウントフジ FUJI 2023】45時間ギリギリの旅⑨　100マイル 歓喜のゴール　F９富士吉田〜FINISH富士急ハイランド",2023,"FUJI100mi",["完走記・レポート"]),
+  V("fuji","Fo_IDgZ-qTk","【UTMF試走2023】FUJI公式コース④霜山〜天上山〜河口湖まで　これが本当の”ラスボス”霜山　カチカチ山で満開の桜と富士山",2023,"FUJI100mi",["コース解説"]),
+  V("fuji","ZSwrQ_v7Bt0","【番外編】日本最大のトレランレース　マウントフジ100　2025 観戦レポ",2025,"",["ペーサー・応援"]),
+  V("fuji","Pqfk913j2XQ","🔴 🇯🇵 Mt.FUJI 100 2026 LIVE - Part 0 マウントフジ100・日本語版ライブ配信",2026,"",["ライブ・大会映像"]),
+  V("fuji","9OT7yr9FsIo","🔴 🇯🇵 Mt.FUJI 100 2026 LIVE - Part 1 マウントフジ100・日本語版ライブ配信",2026,"",["ライブ・大会映像"]),
+  V("fuji","IVuH6SjRPtw","🔴 🇯🇵 Mt.FUJI 100 2026 LIVE - Part 3 マウントフジ100・日本語版ライブ配信",2026,"",["ライブ・大会映像"]),
+  V("fuji","v__iX1cTU9o","🔴 🇯🇵 Mt.FUJI 100 2026 LIVE - FINISH 1",2026,"",["ライブ・大会映像"]),
+  V("fuji","OcHZwJHmCOs","🔴 🇯🇵 Mt.FUJI 100 2026 LIVE - FINISH 2",2026,"",["ライブ・大会映像"]),
+  V("fuji","s0VyXpC6OFA","🔴 🇯🇵 Mt.FUJI 100 2026 LIVE - FINISH 3",2026,"",["ライブ・大会映像"]),
+  V("fuji","oV30LLP_Boo","🔴🇯🇵Mt.FUJI100 LIVE（JP)_Mt.FUJI100 2026 大会概要発表 LIVE(日本語放送）",2026,"",["ニュース・結果"]),
+  V("fuji","hx7WtwPvJek","ASUMI40K｜4:48:59で完走…霜山キツすぎたけど最高に楽しかった！【2026】Mt.FUJI100",2026,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","yxMGQlTV9Bg","トレランやってたら一度は出たいMt.FUJIで今年も走ってきた！【ASUMI40K】",2026,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","vQJGr6ejIwY","115.【レース動画#14】ASUMI40k 初開催の走れるトレイルランニングに参加しました♪目標6時間でしたが、予想以上に走れるコースだったため、5時間30分切れました。",2025,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","B-sa_Rig6Dk","【Mt.FUJI100 ASUMI40K】レースレポート/2026.4.25",2026,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","l_EQ5XyZs7Q","【最高！】Mt.FUJI ASUMI40k 2026.4.25",2026,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","f5qNBSn_i8U","【Vlog】Mt.FUJI100 ASUMI40k",2026,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","vpzw-vDUV3k","【Mt.FUJI100 ASUMI40k 2026】",2026,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","WzLHXQA50T4","Mt.FUJI100 ASUMI40K Part2 2026.4.25",2026,"ASUMI40k",["完走記・レポート"]),
+  VL("fuji","mNE9RJhCKqM","Started Last, Moving Up: Passing 100+ | ASUMI 40K Mt.FUJI100",2026,"ASUMI40k",["完走記・レポート"],"en"),
+  V("fuji","5oCQYeXqd8U","【トレラン】Mt.FUJI ASUMI 40k",2025,"ASUMI40k",["完走記・レポート"]),
+  V("fuji","atUFrkpHQR0","Mt.FUJI100 ASUMI40k　スタート後（体育館前）　2026.4.25",2026,"ASUMI40k",["ライブ・大会映像"]),
+  V("kai","jfbKcZ9h8GI","トレイル辞めたいと思うくらいキツかった【KAI70K】",null,"",["完走記・レポート"]),
+  VL("kai","KuCYw6dWCmk","『日本越野跑篇』Mt Fuji 100 Kai 70km 2025｜環富士山附近山岳｜首次挑戰日本越野跑 禁示用行山杖 斜坡大攀爬 體力大考驗",2025,"",["完走記・レポート"],"zh"),
+  VL("kai","c4wwHKumIUk","2025 Mt.FUJI 100 KAI 70K 런트립",2025,"",["完走記・レポート"],"ko"),
+  VL("kai","r4m5G9Tsxks","從天堂跌落地獄的13小時｜Mt.FUJI 100 KAI 70K 極限越野賽之旅",2025,"",["完走記・レポート"],"zh"),
+  V("kai","G4BMyJ1E5CE","【ULTRA-TRAIL Mt.FUJI2023  KAIを走ってきました！】ここからスタート、100マイラーへの道。",2023,"",["完走記・レポート"]),
+  V("kai","vpLkrGk3CqQ","【Mt.FUJI100】KAIで実際に持っていく必携品・補給を全て紹介",2026,"",["装備・準備"]),
+  V("kai","ONKBHOM2-FE","【レース直前】Mt.FUJI KAI 70Kこれで丸わかり！徹底解説＆作戦会議！目標タイムは、、、？",2024,"",["コース解説"]),
+  V("kai","RI8NxFjjrLk","【Mt.FUJI100 KAI】総合5位の全記録｜前日からレース後まで密着",2026,"",["完走記・レポート"]),
+  V("kai","pthTQN_DvGo","【2024 Mt.FUJI KAI70K 】悔しくて夜も眠れません。",2024,"",["完走記・レポート"]),
+  V("kai","cknGkIm0itg","ASUMI40k,KAI70kのコースを試走してきました！",2025,"",["コース解説"]),
+  V("kai","sUS0XRRyWXk","Mt.FUJI100 2024 KAI70k start!",2024,"",["ライブ・大会映像"]),
+  V("kai","7iPQM9V15QI","【トレイルランニング】リングフィットRTA走者が挑むMt.FUJI KAI70k 19:44:23 【完走】",2025,"",["完走記・レポート"]),
+  V("kai","RKsJeSYI2xs","【Mt.FUJI100】yuzuスタッフが日本一のトレラン大会へチャレンジ！KAI70/ASUMI40",2025,"",["完走記・レポート"]),
+  V("kgr","Lr3uVdKYo_0","KYOTO GREAT ROUND 2025 LIVE DAY3",2025,"",["ライブ・大会映像"]),
+  V("kgr","4wJdyuzcVms","KYOTO GREAT ROUND 2025 LIVE DAY2-2",2025,"",["ライブ・大会映像"]),
+  V("kgr","9UkGfPLNyvs","2025KYOTO GREAT ROUND事前見どころ解説！",2025,"",["コース解説"]),
+  V("ishibutai","nwDhnI7ocGI","凍てつく夜の熱気！石舞台100トレイルランニングレース DAY1 夜間ゴール定点ライブ",2026,"",["ライブ・大会映像"])
+);
 ITEMS.forEach(i => { if(!i.lg) i.lg = "ja"; });
 { const k = ITEMS.find(i=>i.u.endsWith("ih4VGKiB6eU")); if(k){ k.lg="en"; k.t="Mt. Fuji100 | KAI70 2026 My First 70K Trail Race in Japan (Brutal Night Run)"; } }
 
@@ -566,7 +651,7 @@ const TAGS = ["完走記・レポート","DNF・リタイア","ペーサー・�
 const TAG_EN = {"完走記・レポート":"Race report","DNF・リタイア":"DNF","ペーサー・応援":"Pacer / crew","装備・準備":"Gear & prep","コース解説":"Course guide","ライブ・大会映像":"Live / official video","ニュース・結果":"News & results","スナップ・特集":"Features"};
 const DIST_EN = {"UTMF時代":"UTMF era"};
 const SRC_EN = {"アメブロ":"Ameba Blog","はてなブログ":"Hatena Blog","Mt.FUJI100 公式":"Mt.FUJI100 official","ヤマレコ":"Yamareco","LISTEN（ポッドキャスト）":"LISTEN (podcast)","ソトアソ":"Sotoaso","てつラン＆トレイル":"Tetsu Run & Trail","山猿日誌":"Yamazaru Nisshi","ボボ・ブラジル":"Bobo Brazil","コンサルティングテクニカ":"Consulting Tecnica"};
-const LG_LABEL = {ja:{ja:"日本語",en:"英語",both:"日英"}, en:{ja:"Japanese",en:"English",both:"JA / EN"}};
+const LG_LABEL = {ja:{ja:"日本語",en:"英語",both:"日英",zh:"中国語",ko:"韓国語"}, en:{ja:"Japanese",en:"English",both:"JA / EN",zh:"Chinese",ko:"Korean"}};
 const STR = {
   ja:{eyebrow:"TRAIL RACE LOGBOOK · 試作版", h1:'エントリー前に読む<span class="tape">体験記</span>',
     lead:"大会ごとに、先輩ランナーの完走記・リタイア記・ペーサー記・動画をまとめました。エントリーを迷っているときや、コースの雰囲気をつかみたいときにどうぞ。",
@@ -637,7 +722,7 @@ function renderFilters(){
   $("distRow").hidden = dists.length < 2;
   chipRow("distRow","dist-", dists.map(d=>[d, distL(d)]), state.dist, v=>state.dist=v);
   chipRow("kindRow","kind-", [["blog",S().blog],["video",S().video]], state.kind==="all"?null:state.kind, v=>state.kind=v||"all");
-  chipRow("langRow","lang-", [["ja",LG_LABEL[UI].ja],["en",UI==="en"?"English / bilingual":"英語・日英"]], state.lang, v=>state.lang=v);
+  chipRow("langRow","lang-", [["ja",LG_LABEL[UI].ja],["en",UI==="en"?"English / bilingual":"英語・日英"],["other",UI==="en"?"Chinese / Korean":"中国語・韓国語"]], state.lang, v=>state.lang=v);
   const tr = $("tagRow"); tr.querySelectorAll(".chip").forEach(n=>n.remove());
   const present = new Set(inRace.flatMap(i=>i.tags));
   TAGS.filter(t=>present.has(t)).forEach(t => { const b=document.createElement("button"); b.className="chip"; b.id="tag-"+TAGS.indexOf(t); b.textContent=tagL(t); b.setAttribute("aria-pressed", state.tag===t); b.onclick=()=>{state.tag = state.tag===t?null:t; renderFilters(); renderList();}; tr.appendChild(b); });
@@ -649,7 +734,7 @@ function renderList(){
     && (!state.tag || i.tags.includes(state.tag))
     && (!state.year || yearKey(i)===state.year)
     && (!state.dist || distKey(i)===state.dist)
-    && (!state.lang || (state.lang==="ja" ? i.lg!=="en" : i.lg!=="ja"))
+    && (!state.lang || (state.lang==="ja" ? (i.lg==="ja"||i.lg==="both") : state.lang==="en" ? (i.lg==="en"||i.lg==="both") : (i.lg==="zh"||i.lg==="ko")))
     && (!q || [i.t,i.tEn||"",i.s,i.d,String(i.y||""),...i.tags,...i.tags.map(t=>TAG_EN[t])].join(" ").toLowerCase().includes(q)))
     .sort((a,b)=>(b.y||0)-(a.y||0));
   $("count").textContent = S().count(rows.length);
